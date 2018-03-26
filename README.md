@@ -1,9 +1,10 @@
 # angular2-othello
 
 This is a project for ISA 681 developed by
--Aniket Bhosale
--Tanmay Kharshikar
--Tyrone Almeida
+
+Aniket Bhosale
+Tanmay Kharshikar
+Tyrone Almeida
 
 Our aim is to implement following security features to our server code-
 *
