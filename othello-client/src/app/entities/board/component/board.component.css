@@ -1,0 +1,12 @@
+.board-square {
+    padding: 5px;
+    background-color: aquamarine;
+    border-color: black;
+    border-width: 2px;
+    border-style: inset;
+    height: 50px;
+    width: 50px;
+}
+.board-row {
+    display: inline-block;
+}

@@ -8,11 +8,13 @@ export class Board {
     static EMPTY_LOCATION_RULE = 'You must select empty location on board';
     static ADJACENT_LOCATION_RULE = 'You must select an empty location on board which outflanks and flips an opponent disc';
 
-    private values: Array<Array<Disc>>;
+    public values: Array<Array<Disc>>;
 
     actionResultMessage = '';
 
-    constructor(private gameService: GameService) { }
+    constructor(private gameService: GameService) {
+        this.initializeValues();
+    }
 
     public setBoardPiece(rowNum: number, colNum: number): void {
         if (this.values[rowNum][colNum] !== null) {
@@ -21,7 +23,9 @@ export class Board {
     }
 
     private initializeValues(): void {
+        this.values = [];
         for (let row = 0; row < Board.NUMBER_OF_ROWS; row++) {
+            this.values[row] = [];
             for (let col = 0; col < Board.NUMBER_OF_COLUMNS; col++) {
                 this.values[row][col] = null;
             }
@@ -93,4 +97,57 @@ export class Board {
         }
         return diagonalDiscs;
     }
+
+    // private getOutflankedDiscs(moveRow: number, moveCol: number): Array<Disc> {
+    //     // let currentUserDiscType = this.gameService.currentPlayer.discType;
+    //     // let horizontalOutflanks = this.get
+    // }
+
+    // private getHorizontalOutflanks(moveRow: number, moveCol: number, discType: DiscType): Array<Disc> {
+    //     let leftOutFlanks = this.getLeftHorizontalOutflanks(moveRow, moveCol, discType);
+    // }
+
+    // private getLeftOutflanks(moveRow: number, moveCol: number, discType: DiscType, discs: Array<Disc>): Array<Disc> {
+    //     let opponentsOutFlankedDisks = [];
+    //     if (moveCol > 0 && moveCol < Board.NUMBER_OF_COLUMNS) {
+    //         if (this.values[moveRow][moveCol - 1] === null) {
+    //             return null;
+    //         }
+    //         if (this.values[moveRow][moveCol - 1].discValue === discType) {
+    //             return null;
+    //         }
+    //         if (this.values[moveRow][moveCol - 1].discValue !== discType) {
+    //             let outFlankedDisk = this.values[moveRow][moveCol - 1];
+    //             opponentsOutFlankedDisks.push(outFlankedDisk);
+    //             let outFlankedDisks = this.getHorizontalOutflanks(moveRow, moveCol - 1, discType);
+    //             if (outFlankedDisks !== null) {
+    //                 opponentsOutFlankedDisks = opponentsOutFlankedDisks.concat(outFlankedDisks);
+    //             }
+    //             return opponentsOutFlankedDisks;
+    //         }
+    //     }
+    //     return null;
+    // }
+
+    // private getLeftHorizontalOutflanks(moveRow: number, moveCol: number, discType: DiscType): Array<Disc> {
+    //     let opponentsOutFlankedDisks = [];
+    //     if (moveCol > 0 && moveCol < Board.NUMBER_OF_COLUMNS) {
+    //         if (this.values[moveRow][moveCol - 1] === null) {
+    //             return null;
+    //         }
+    //         if (this.values[moveRow][moveCol - 1].discValue === discType) {
+    //             return null;
+    //         }
+    //         if (this.values[moveRow][moveCol - 1].discValue !== discType) {
+    //             let outFlankedDisk = this.values[moveRow][moveCol - 1];
+    //             opponentsOutFlankedDisks.push(outFlankedDisk);
+    //             let outFlankedDisks = this.getHorizontalOutflanks(moveRow, moveCol - 1, discType);
+    //             if (outFlankedDisks !== null) {
+    //                 opponentsOutFlankedDisks = opponentsOutFlankedDisks.concat(outFlankedDisks);
+    //             }
+    //             return opponentsOutFlankedDisks;
+    //         }
+    //     }
+    //     return null;
+    // }
 }

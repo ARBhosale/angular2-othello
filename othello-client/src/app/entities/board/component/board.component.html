@@ -1,0 +1,10 @@
+<ng-container *ngIf="board">
+    <div class="board-container">
+        <div *ngFor="let row of board.values; let rowIndex = index">
+            <div class="board-row" *ngFor="let col of row; let colIndex = index">
+                <div class="board-square">disc {{rowIndex}}&nbsp;{{colIndex}}</div>
+            </div>
+            <br/>
+        </div>
+    </div>
+</ng-container>

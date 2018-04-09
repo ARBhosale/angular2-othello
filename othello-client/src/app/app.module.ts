@@ -5,10 +5,14 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { GameService } from './services/game/game.service';
+import { BoardComponent } from './entities/board/component/board.component';
+import { DiscComponent } from './entities/disc/component/disc.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BoardComponent,
+    DiscComponent
   ],
   imports: [
     BrowserModule,
