@@ -1,8 +1,11 @@
 <ng-container *ngIf="board">
     <div class="board-container">
-        <div *ngFor="let row of board.values; let rowIndex = index">
-            <div class="board-row" *ngFor="let col of row; let colIndex = index">
-                <div class="board-square">disc {{rowIndex}}&nbsp;{{colIndex}}</div>
+        <div class="board-row" *ngFor="let row of board.values; let rowIndex = index">
+            <div *ngFor="let col of row; let colIndex = index">
+                <div class="board-square">
+                    <span *ngIf="!board.values[rowIndex][colIndex]">disc {{rowIndex}}&nbsp;{{colIndex}}</span>
+                    <disc [disc]="board.values[rowIndex][colIndex]"></disc>
+                </div>
             </div>
             <br/>
         </div>

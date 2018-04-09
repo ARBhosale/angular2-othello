@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Disc, DiscType } from "../disc";
 
 @Component({
@@ -6,11 +6,15 @@ import { Disc, DiscType } from "../disc";
     templateUrl: './disc.component.html',
     styleUrls: ['./disc.component.css']
 })
-export class DiscComponent {
+export class DiscComponent implements OnInit {
 
-    @Input() rowNumber: number;
-    @Input() colNumber: number;
-    @Input() discType: DiscType;
+    @Input() disc: Disc;
 
+    constructor() { }
 
+    ngOnInit() {
+        if (this.disc) {
+            console.log(this.disc);
+        }
+    }
 }

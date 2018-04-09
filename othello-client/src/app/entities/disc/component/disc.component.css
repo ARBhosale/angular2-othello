@@ -1,0 +1,20 @@
+.disc-piece {
+    border-radius: 5px;
+    border-color: gold;
+    width: inherit;
+    height: inherit;
+}
+
+.white-disc-piece {
+    background-color: white;
+    height: inherit;
+    width: inherit;
+    border-radius: 100%;
+}
+
+.black-disc-piece {
+    background-color: black;
+    height: inherit;
+    width: inherit;
+    border-radius: 100%;
+}

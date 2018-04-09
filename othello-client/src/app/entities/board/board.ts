@@ -30,6 +30,14 @@ export class Board {
                 this.values[row][col] = null;
             }
         }
+        this.initializeStartingPositions();
+    }
+
+    private initializeStartingPositions(): void {
+        this.values[3][3] = new Disc(DiscType.White, 3, 3);
+        this.values[4][4] = new Disc(DiscType.White, 4, 4);
+        this.values[4][3] = new Disc(DiscType.Black, 4, 3);
+        this.values[3][4] = new Disc(DiscType.Black, 3, 4);
     }
 
     private getRowOfDiscs(rowNumber: number): Array<Disc> {
@@ -98,10 +106,74 @@ export class Board {
         return diagonalDiscs;
     }
 
-    // private getOutflankedDiscs(moveRow: number, moveCol: number): Array<Disc> {
-    //     // let currentUserDiscType = this.gameService.currentPlayer.discType;
-    //     // let horizontalOutflanks = this.get
-    // }
+    private getIndexOfMoveDisc(userMoveRow: number, userMovCol: number, userDiscType: DiscType, listOfDiscs: Array<Disc>): number {
+        for (let i = 0; i < listOfDiscs.length; i++) {
+            if (listOfDiscs[i].rowPosition === userMoveRow && listOfDiscs[i].colPosition === userMovCol) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private getOutFlankedDiscsOutOfList(userMoveRow: number, userMovCol: number, userDiscType: DiscType, listOfDiscs: Array<Disc>): Array<Disc> {
+        let index = this.getIndexOfMoveDisc(userMoveRow, userMovCol, userDiscType, listOfDiscs);
+        if (index < 0) {
+            return [];
+        } else {
+            let leftApparentOutflankedDiscs = [];
+            // left of current move
+            for (let i = index - 1; i >= 0; i--) {
+                let boardDisc = listOfDiscs[i];
+                if (boardDisc.discValue !== userDiscType) {
+                    if (i === 0) {
+                        leftApparentOutflankedDiscs = [];
+                    } else {
+                        leftApparentOutflankedDiscs.push(boardDisc);
+                    }
+                } else if (boardDisc.discValue === userDiscType) {
+                    break;
+                }
+            }
+            // right of current move
+            let rightApparentOutflankedDiscs = [];
+            for (let i = index + 1; i < listOfDiscs.length; i++) {
+                let boardDisc = listOfDiscs[i];
+                if (boardDisc.discValue !== userDiscType) {
+                    if (i === listOfDiscs.length - 1) {
+                        rightApparentOutflankedDiscs = [];
+                    } else {
+                        rightApparentOutflankedDiscs.push(boardDisc);
+                    }
+                } else if (boardDisc.discValue === userDiscType) {
+                    break;
+                }
+            }
+
+            let outFlankedDiscsInList = leftApparentOutflankedDiscs.concat(rightApparentOutflankedDiscs);
+
+            return outFlankedDiscsInList;
+        }
+    }
+
+    private getOutflankedDiscs(moveRow: number, moveCol: number): Array<Disc> {
+        let outFlankedDisks = [];
+        let currentUserDiscType = this.gameService.currentPlayer.discType;
+
+        // horizontal outflanked disks
+        let horizontalDiscs = this.getOutFlankedDiscsOutOfList(moveRow, moveCol, currentUserDiscType, this.getRowOfDiscs(moveRow));
+        // vertical outflanked disks
+        let verticalDiscs = this.getOutFlankedDiscsOutOfList(moveRow, moveCol, currentUserDiscType, this.getColumnOfDiscs(moveRow));
+        // leftRight diagonal outflanked disks
+        let leftRightDiagonalDiscs = this.getOutFlankedDiscsOutOfList(moveRow, moveCol, currentUserDiscType, this.getLeftRightDiagonalDiscs(moveRow, moveCol));
+        // rightLeft diagonal outflanked disks
+        let rightLeftDiagonalDiscs = this.getOutFlankedDiscsOutOfList(moveRow, moveCol, currentUserDiscType, this.getRightLeftDiagonalDiscs(moveRow, moveCol))
+
+        outFlankedDisks = outFlankedDisks.concat(horizontalDiscs, verticalDiscs, leftRightDiagonalDiscs, rightLeftDiagonalDiscs);
+
+        return outFlankedDisks;
+    }
+
+    
 
     // private getHorizontalOutflanks(moveRow: number, moveCol: number, discType: DiscType): Array<Disc> {
     //     let leftOutFlanks = this.getLeftHorizontalOutflanks(moveRow, moveCol, discType);

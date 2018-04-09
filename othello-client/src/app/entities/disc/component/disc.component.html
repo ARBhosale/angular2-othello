@@ -1,3 +1,5 @@
-<ng-container *ngIf="rowNumber && colNumber && discType">
-    {{rowNumber + ', ' + colNumber + ' Type:' + discType}}
+<ng-container *ngIf="disc">
+    <div class="disc-piece">
+        <div [class]="disc.discValue==1 ? 'white-disc-piece' : 'black-disc-piece'"></div>
+    </div>
 </ng-container>

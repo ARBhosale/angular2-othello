@@ -10,3 +10,8 @@
 .board-row {
     display: inline-block;
 }
+
+disc {
+    width: inherit;
+    height: inherit;
+}
