@@ -1,4 +1,4 @@
-# angular2-othello
+# angular2-othello.
 
 This is a project for ISA 681 developed by
 
