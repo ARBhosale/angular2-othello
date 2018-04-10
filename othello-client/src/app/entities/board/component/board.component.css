@@ -1,3 +1,6 @@
+.board-container {
+    text-align: center;
+}
 .board-square {
     padding: 5px;
     background-color: aquamarine;
@@ -14,4 +17,13 @@
 disc {
     width: inherit;
     height: inherit;
+}
+
+.turn-message {
+    text-align: center;
+    font: 15px bold;
+}
+.invalid-move {
+    text-align: center;
+    font: 15px bold red;
 }

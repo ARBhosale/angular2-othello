@@ -41,4 +41,8 @@ export class BoardComponent implements OnInit {
             return BoardComponent.WHITE_TURN;
         }
     }
+
+    public underLastMove(): void {
+        
+    }
 }

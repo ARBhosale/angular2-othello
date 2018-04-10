@@ -11,6 +11,8 @@ export class Board {
 
     public values: Array<Array<Disc>>;
 
+    public previousValues: Array<Array<Disc>>;
+
     private game: Game;
 
     actionResultMessage: string = null;
@@ -26,7 +28,7 @@ export class Board {
             this.actionResultMessage = Board.EMPTY_LOCATION_RULE;
             return;
         }
-        this.values[rowNum][colNum] = undefined;
+        
         // if the move can outflank an opponent disc
         let outFlankedDiscs = this.getOutflankedDiscs(rowNum, colNum);
         if (outFlankedDiscs.length === 0) {
@@ -34,8 +36,8 @@ export class Board {
             return;
         }
         // setting board piece
-        console.log('Game before: ');
-        console.log(this.game);
+        console.log('Board before: ');
+        console.log(this.values);
         console.log('Player ' + this.game.currentPlayer.discType + ' played: Row = ' + rowNum + ', Col = ' + colNum);
         this.game.playMove(rowNum, colNum)
             .then((updatedGame) => {
@@ -45,8 +47,8 @@ export class Board {
                 this.flipDiscs(outFlankedDiscs, this.game.currentPlayer.discType);
                 this.game.updateScores(outFlankedDiscs.length);
                 this.game.updatePlayerTurns();
-                console.log('Game after: ');
-                console.log(this.game);
+                console.log('Board after: ');
+                console.log(this.values);
             })
             .catch((error) => {
                 this.actionResultMessage = error;
@@ -150,6 +152,7 @@ export class Board {
                 continue;
             }
             if (listOfDiscs[i] === undefined) {
+                listOfDiscs[i] = null;
                 return i;
             }
             // if (listOfDiscs[i].rowPosition === userMoveRow && listOfDiscs[i].colPosition === userMovCol) {
@@ -220,12 +223,16 @@ export class Board {
         let currentUserDiscType = this.game.currentPlayer.discType;
 
         // horizontal outflanked disks
+        this.values[moveRow][moveCol] = undefined;
         let horizontalDiscs = this.getOutFlankedDiscsOutOfList(moveRow, moveCol, currentUserDiscType, this.getRowOfDiscs(moveRow));
         // vertical outflanked disks
+        this.values[moveRow][moveCol] = undefined;
         let verticalDiscs = this.getOutFlankedDiscsOutOfList(moveRow, moveCol, currentUserDiscType, this.getColumnOfDiscs(moveCol));
         // leftRight diagonal outflanked disks
+        this.values[moveRow][moveCol] = undefined;
         let leftRightDiagonalDiscs = this.getOutFlankedDiscsOutOfList(moveRow, moveCol, currentUserDiscType, this.getLeftRightDiagonalDiscs(moveRow, moveCol));
         // rightLeft diagonal outflanked disks
+        this.values[moveRow][moveCol] = undefined;
         let rightLeftDiagonalDiscs = this.getOutFlankedDiscsOutOfList(moveRow, moveCol, currentUserDiscType, this.getRightLeftDiagonalDiscs(moveRow, moveCol))
 
         outFlankedDisks = outFlankedDisks.concat(horizontalDiscs, verticalDiscs, leftRightDiagonalDiscs, rightLeftDiagonalDiscs);
