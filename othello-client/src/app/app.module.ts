@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { GameService } from './services/game/game.service';
 import { BoardComponent } from './entities/board/component/board.component';
 import { DiscComponent } from './entities/disc/component/disc.component';
+import { ScoreComponent } from './entities/score/score.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
-    DiscComponent
+    DiscComponent,
+    ScoreComponent
   ],
   imports: [
     BrowserModule,

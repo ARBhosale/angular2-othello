@@ -1,4 +1,9 @@
 <h1>
   {{title}}
 </h1>
-<board></board>
+<div class="board-section">
+    <board [game]="game"></board>
+</div>
+<div class="score-section">
+    <score [game]="game"></score>
+</div>

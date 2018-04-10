@@ -1,12 +1,16 @@
 import { DiscType } from "../disc/disc";
+import { User } from "../user/user";
 
 export class Player {
-    firstName: string;
+    user: User;
     discType: DiscType;
+    currentScore = 2;
 
-    constructor() { }
+    constructor(discType: DiscType) {
+        this.discType = discType;
+    }
 
-    public initializePlayerFromJSON(jsonData: any): void {
+    public initializePlayerFromUserJSON(jsonData: any): void {
 
     }
 }

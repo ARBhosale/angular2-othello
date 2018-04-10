@@ -1,13 +1,19 @@
-<ng-container *ngIf="board">
+<ng-container *ngIf="game && board">
+    <div class="turn-message">
+        {{getPlayerTurnMessage()}}
+    </div>
     <div class="board-container">
         <div class="board-row" *ngFor="let row of board.values; let rowIndex = index">
             <div *ngFor="let col of row; let colIndex = index">
-                <div class="board-square">
+                <div class="board-square" (click)="playMove(rowIndex, colIndex)">
                     <span *ngIf="!board.values[rowIndex][colIndex]">disc {{rowIndex}}&nbsp;{{colIndex}}</span>
                     <disc [disc]="board.values[rowIndex][colIndex]"></disc>
                 </div>
             </div>
             <br/>
         </div>
+    </div>
+    <div class="invalid-move" *ngIf="board.actionResultMessage">
+        <span>{{board.actionResultMessage}}</span>
     </div>
 </ng-container>
