@@ -34,7 +34,9 @@ export class Board {
             return;
         }
         // setting board piece
-        console.log('Player ' + this.game.currentPlayer.discType + ' played: Row - ' + rowNum + ', Col = ' + colNum);
+        console.log('Game before: ');
+        console.log(this.game);
+        console.log('Player ' + this.game.currentPlayer.discType + ' played: Row = ' + rowNum + ', Col = ' + colNum);
         this.game.playMove(rowNum, colNum)
             .then((updatedGame) => {
                 // this.game = updatedGame;
@@ -43,6 +45,8 @@ export class Board {
                 this.flipDiscs(outFlankedDiscs, this.game.currentPlayer.discType);
                 this.game.updateScores(outFlankedDiscs.length);
                 this.game.updatePlayerTurns();
+                console.log('Game after: ');
+                console.log(this.game);
             })
             .catch((error) => {
                 this.actionResultMessage = error;
