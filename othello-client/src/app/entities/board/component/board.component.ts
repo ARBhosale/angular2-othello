@@ -3,6 +3,7 @@ import { Board } from "../board";
 import { GameService } from "../../../services/game/game.service";
 import { Game } from "../../../services/game/game";
 import { DiscType } from "../../disc/disc";
+import { BoardState } from "../board.state";
 
 @Component({
     selector: 'board',
@@ -13,7 +14,8 @@ export class BoardComponent implements OnInit {
 
     static BLACK_TURN = 'It is black playing now';
     static WHITE_TURN = 'It is white playing now';
-    board: Board;
+
+    boardState: BoardState;
 
     @Input() game: Game;
 
@@ -24,14 +26,12 @@ export class BoardComponent implements OnInit {
         if (!this.game) {
             return;
         }
-        this.board = new Board(this.game);
+        this.boardState = new BoardState(this.game);
+        this.boardState.initialize();
     }
 
     public playMove(rowNumber: number, colNumber): void {
-        this.board.setBoardPiece(rowNumber, colNumber);
-        if (!this.board.actionResultMessage) {
-
-        }
+        this.boardState.setBoardPiece(rowNumber, colNumber);
     }
 
     public getPlayerTurnMessage(): string {
@@ -42,7 +42,7 @@ export class BoardComponent implements OnInit {
         }
     }
 
-    public underLastMove(): void {
-        
+    public undoMove(): void {
+        this.boardState.goToPreviousState();
     }
 }

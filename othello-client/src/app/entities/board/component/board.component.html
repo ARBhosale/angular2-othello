@@ -1,22 +1,22 @@
-<ng-container *ngIf="game && board">
+<ng-container *ngIf="game && boardState">
     <div class="turn-message">
         {{getPlayerTurnMessage()}}
     </div>
-    <div class="board-container">
-        <div class="board-row" *ngFor="let row of board.values; let rowIndex = index">
+    <div class="board-container" *ngIf="boardState.states">
+        <div class="board-row" *ngFor="let row of boardState.getCurrentState().values; let rowIndex = index">
             <div *ngFor="let col of row; let colIndex = index">
                 <div class="board-square" (click)="playMove(rowIndex, colIndex)">
-                    <span *ngIf="!board.values[rowIndex][colIndex]">disc {{rowIndex}}&nbsp;{{colIndex}}</span>
-                    <disc [disc]="board.values[rowIndex][colIndex]"></disc>
+                    <span *ngIf="!boardState.getCurrentState().values[rowIndex][colIndex]">disc {{rowIndex}}&nbsp;{{colIndex}}</span>
+                    <disc [disc]="boardState.getCurrentState().values[rowIndex][colIndex]"></disc>
                 </div>
             </div>
             <br/>
         </div>
     </div>
-    <!-- <div>
-        <button (click)="underLastMove()">Undo</button>
-    </div> -->
-    <div class="invalid-move" *ngIf="board.actionResultMessage">
-        <span>{{board.actionResultMessage}}</span>
+    <div>
+        <button (click)="undoMove()">Undo</button>
+    </div>
+    <div class="invalid-move" *ngIf="boardState.states && boardState.getCurrentState().actionResultMessage">
+        <span>{{boardState.getCurrentState().actionResultMessage}}</span>
     </div>
 </ng-container>
