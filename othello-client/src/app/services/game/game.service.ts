@@ -14,7 +14,7 @@ export class GameService {
 
     public startNewGame(): Game {
         let newGame = new Game();
-        // this.onGoingGames.push(newGame);
+        //// this.onGoingGames.push(newGame);
         return newGame;
     }
 }
