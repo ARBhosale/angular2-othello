@@ -52,6 +52,23 @@ export class Board {
         return discs;
     }
 
+    public isAnyMovePossible(): boolean {
+        // checking for non-zero outflanked disks in all positions. Breaks when atleast one position found.
+        for (let row = 0; row < Board.NUMBER_OF_ROWS; row++) {
+            for (let col = 0; col < Board.NUMBER_OF_COLUMNS; col++) {
+                let disc = this.values[row][col];
+                if (disc) {
+                    continue;
+                }
+                let outFlankedDiscs = this.getOutflankedDiscs(row, col);
+                if (outFlankedDiscs.length > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private initializeValues(boardToInitializeFrom?: Board): void {
         this.values = [];
         for (let row = 0; row < Board.NUMBER_OF_ROWS; row++) {
@@ -157,11 +174,12 @@ export class Board {
             // left of current move
             for (let i = index - 1; i >= 0; i--) {
                 let boardDisc = listOfDiscs[i];
+                if (!boardDisc) {
+                    leftApparentOutflankedDiscs = [];
+                    break;
+                }
                 if (!boardDisc && i === 0) {
                     leftApparentOutflankedDiscs = [];
-                }
-                if (!boardDisc) {
-                    continue;
                 }
                 if (boardDisc.discValue !== userDiscType) {
                     if (i === 0) {
@@ -177,11 +195,12 @@ export class Board {
             let rightApparentOutflankedDiscs = [];
             for (let i = index + 1; i < listOfDiscs.length; i++) {
                 let boardDisc = listOfDiscs[i];
+                if (!boardDisc) {
+                    rightApparentOutflankedDiscs = [];
+                    break;
+                }
                 if (!boardDisc && i === listOfDiscs.length - 1) {
                     rightApparentOutflankedDiscs = [];
-                    continue;
-                }
-                if (!boardDisc) {
                     continue;
                 }
                 if (boardDisc.discValue !== userDiscType) {

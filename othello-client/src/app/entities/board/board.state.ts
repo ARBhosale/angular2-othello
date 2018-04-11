@@ -1,6 +1,6 @@
 import { Board } from "./board";
 import { Game } from "../../services/game/game";
-import { Disc } from "../disc/disc";
+import { Disc, DiscType } from "../disc/disc";
 
 export class BoardState {
 
@@ -64,6 +64,7 @@ export class BoardState {
         let outFlankedDiscs = board.getOutflankedDiscs(rowNum, colNum);
         if (outFlankedDiscs.length === 0) {
             board.actionResultMessage = Board.OUTFLANK_RULE;
+
             return;
         }
         // setting board piece
@@ -81,10 +82,22 @@ export class BoardState {
                 console.log(newBoard.values);
                 this.pushNewState(newBoard);
                 this.game = updatedGame;
+                this.performNoMoveActions();
             })
             .catch((error) => {
                 board.actionResultMessage = error;
             });
+    }
+
+    private performNoMoveActions(): void {
+        if (!this.getCurrentState().isAnyMovePossible()) {
+            let player = this.game.currentPlayer.discType === DiscType.Black ? 'Black' : 'White';
+            if (window.confirm('There are no moves possible for Player ' + player + '. Press OK to continue or Cancel to undo.')) {
+                this.game.updatePlayerTurns();
+            } else {
+                this.goToPreviousState();
+            }
+        }
     }
 
 
