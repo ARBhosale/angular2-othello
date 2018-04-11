@@ -6,18 +6,25 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
 import {LoginService} from './login.comp.Service';
+import { GameService } from './services/game/game.service';
+import { BoardComponent } from './entities/board/component/board.component';
+import { DiscComponent } from './entities/disc/component/disc.component';
+import { ScoreComponent } from './entities/score/score.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    BoardComponent,
+    DiscComponent,
+    ScoreComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [LoginService],
+  providers: [LoginService,GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
