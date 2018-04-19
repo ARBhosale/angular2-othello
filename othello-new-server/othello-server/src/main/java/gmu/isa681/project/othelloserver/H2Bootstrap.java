@@ -21,16 +21,16 @@ public class H2Bootstrap implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-//		System.out.println("Getting games");
-//		gameRepository.save(new GameEntity());
-//		gameRepository.save(new GameEntity());
-//		gameRepository.save(new GameEntity());
-//		
-//		Iterable<GameEntity> itr = gameRepository.findAll();
-//		System.out.println("Printing games");
-//		for(GameEntity game: itr) {
-//			System.out.println(game.getId());
-//		}
+		System.out.println("Getting games");
+		gameRepository.save(new GameEntity());
+		gameRepository.save(new GameEntity());
+		gameRepository.save(new GameEntity());
+		
+		Iterable<GameEntity> itr = gameRepository.findAll();
+		System.out.println("Printing games");
+		for(GameEntity game: itr) {
+			System.out.println(game.getId());
+		}
 		
 		System.out.println("Creating 3 users");
 		playerRespository.save(new PlayerEntity("A","B","uc"));

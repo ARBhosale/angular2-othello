@@ -4,7 +4,7 @@ import gmu.isa681.project.othelloserver.model.Links;
 
 public class PlayingResponse {
 	private Long id;
-	private Integer gameNumber;
+	private Long gameNumber;
 	private boolean hasBlack;
 	private Links links;
 
@@ -16,11 +16,11 @@ public class PlayingResponse {
 		this.id = id;
 	}
 
-	public Integer getGameNumber() {
+	public Long getGameNumber() {
 		return gameNumber;
 	}
 
-	public void setGameNumber(Integer gameNumber) {
+	public void setGameNumber(Long gameNumber) {
 		this.gameNumber = gameNumber;
 	}
 
@@ -40,7 +40,7 @@ public class PlayingResponse {
 		this.links = links;
 	}
 
-	public PlayingResponse(Integer gameNumber) {
+	public PlayingResponse(Long gameNumber) {
 		super();
 		this.gameNumber = gameNumber;
 	}
