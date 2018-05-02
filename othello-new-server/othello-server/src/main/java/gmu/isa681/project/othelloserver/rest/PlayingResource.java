@@ -29,30 +29,25 @@ public class PlayingResource {
 
 	@Autowired
 	PageableGameRepository pageableGameRepository;
-	
+
 	@Autowired
 	GameRepository gameRepository;
-	
+
 	@Autowired
-    ConversionService conversionService;
+	ConversionService conversionService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Page<PlayingResponse> getAvailableGames(
-			Pageable pageable
-			) {
-		
+	public Page<PlayingResponse> getAvailableGames(Pageable pageable) {
+
 		Page<GameEntity> gameEntityList = pageableGameRepository.findAll(pageable);
-		Converter<GameEntity, PlayingResponse> converter = new GameEntityToPlayingResponseConverter();
-		
-		return gameEntityList.map((e->converter.convert(e)));
+
+		return gameEntityList.map((e -> conversionService.convert(e, PlayingResponse.class)));
 	}
-	
-	@RequestMapping(path="/{gameId}", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<GameEntity> getGameById(
-			@PathVariable
-			Long gameId) {
+
+	@RequestMapping(path = "/{gameId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<GameEntity> getGameById(@PathVariable Long gameId) {
 		Optional<GameEntity> gameEntity = gameRepository.findById(gameId);
-		
+
 		return new ResponseEntity<>(gameEntity.get(), HttpStatus.OK);
 	}
 

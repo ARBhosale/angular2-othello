@@ -10,32 +10,33 @@ import gmu.isa681.project.othelloserver.repository.GameRepository;
 import gmu.isa681.project.othelloserver.repository.PlayerRepository;
 
 @Component
-public class H2Bootstrap implements CommandLineRunner{
-	
+public class H2Bootstrap implements CommandLineRunner {
+
 	@Autowired
 	GameRepository gameRepository;
-	
+
 	@Autowired
 	PlayerRepository playerRespository;
 
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("Getting games");
-		gameRepository.save(new GameEntity());
-		gameRepository.save(new GameEntity());
-		gameRepository.save(new GameEntity());
-		
-		Iterable<GameEntity> itr = gameRepository.findAll();
-		System.out.println("Printing games");
-		for(GameEntity game: itr) {
-			System.out.println(game.getId());
-		}
-		
-		System.out.println("Creating 3 users");
-		playerRespository.save(new PlayerEntity("A","B","uc"));
-		playerRespository.save(new PlayerEntity("D","E","uF"));
-		playerRespository.save(new PlayerEntity("G","H","uI"));
+		System.out.println("Creating 3 players");
+		PlayerEntity player1 = new PlayerEntity("A", "B", "uc");
+		PlayerEntity player2 = new PlayerEntity("D", "E", "uF");
+		PlayerEntity player3 = new PlayerEntity("G", "H", "uI");
+
+		playerRespository.save(player1);
+		playerRespository.save(player2);
+		playerRespository.save(player3);
+
+		System.out.println("Creating 1 game with first player created");
+
+		GameEntity game1 = new GameEntity(player1.getId());
+
+		System.out.println("A game started by: " + game1.getPlayerWhoCreatedGame());
+
+		gameRepository.save(game1);
 	}
 
 }

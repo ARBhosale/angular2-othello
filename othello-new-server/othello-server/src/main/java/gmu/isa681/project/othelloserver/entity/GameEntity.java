@@ -13,51 +13,71 @@ public class GameEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-//	@NotNull
-//	private PlayerEntity playerBlack;
-//	@NotNull
-//	private PlayerEntity playerWhite;
-	
-//	@NotNull
-//	private Integer playerBlackScore;
-//	@NotNull
-//	private Integer playerWhiteScore;
+
+	@NotNull
+	private Long gameCreatorPlayerId;
+
+	private Long playerBlackId;
+
+	private Long playerWhiteId;
+
+	private Integer playerBlackScore;
+
+	private Integer playerWhiteScore;
+
+	public GameEntity(@NotNull Long playerWhoCreatedGameId) {
+		super();
+		this.gameCreatorPlayerId = playerWhoCreatedGameId;
+	}
+
 	public Long getId() {
 		return id;
 	}
+
+	public Long getPlayerWhoCreatedGame() {
+		return gameCreatorPlayerId;
+	}
+
+	public void setPlayerWhoCreatedGame(Long playerWhoCreatedGame) {
+		this.gameCreatorPlayerId = playerWhoCreatedGame;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-//	public PlayerEntity getPlayerBlack() {
-//		return playerBlack;
-//	}
-//	public void setPlayerBlack(PlayerEntity playerBlack) {
-//		this.playerBlack = playerBlack;
-//	}
-//	public PlayerEntity getPlayerWhite() {
-//		return playerWhite;
-//	}
-//	public void setPlayerWhite(PlayerEntity playerWhite) {
-//		this.playerWhite = playerWhite;
-//	}
-//	public Integer getPlayerBlackScore() {
-//		return playerBlackScore;
-//	}
-//	public void setPlayerBlackScore(Integer playerBlackScore) {
-//		this.playerBlackScore = playerBlackScore;
-//	}
-//	public Integer getPlayerWhiteScore() {
-//		return playerWhiteScore;
-//	}
-//	public void setPlayerWhiteScore(Integer playerWhiteScore) {
-//		this.playerWhiteScore = playerWhiteScore;
-//	}
-//	public GameEntity(@NotNull PlayerEntity playerBlack, @NotNull PlayerEntity playerWhite) {
-//		super();
-//		this.playerBlack = playerBlack;
-//		this.playerWhite = playerWhite;
-//	}
+
+	public Long getPlayerBlack() {
+		return playerBlackId;
+	}
+
+	public void setPlayerBlack(Long playerBlack) {
+		this.playerBlackId = playerBlack;
+	}
+
+	public Long getPlayerWhite() {
+		return playerWhiteId;
+	}
+
+	public void setPlayerWhite(Long playerWhite) {
+		this.playerWhiteId = playerWhite;
+	}
+
+	public Integer getPlayerBlackScore() {
+		return playerBlackScore;
+	}
+
+	public void setPlayerBlackScore(Integer playerBlackScore) {
+		this.playerBlackScore = playerBlackScore;
+	}
+
+	public Integer getPlayerWhiteScore() {
+		return playerWhiteScore;
+	}
+
+	public void setPlayerWhiteScore(Integer playerWhiteScore) {
+		this.playerWhiteScore = playerWhiteScore;
+	}
+
 	public GameEntity() {
 		super();
 	}
