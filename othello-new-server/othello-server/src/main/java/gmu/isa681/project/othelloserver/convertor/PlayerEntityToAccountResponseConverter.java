@@ -7,7 +7,7 @@ import gmu.isa681.project.othelloserver.entity.PlayerEntity;
 import gmu.isa681.project.othelloserver.model.Links;
 import gmu.isa681.project.othelloserver.model.Self;
 import gmu.isa681.project.othelloserver.model.response.AccountResponse;
-import gmu.isa681.project.othelloserver.model.response.PlayingResponse;
+import gmu.isa681.project.othelloserver.model.response.game.PlayingResponse;
 import gmu.isa681.project.othelloserver.rest.ResourceConstants;
 
 public class PlayerEntityToAccountResponseConverter implements Converter<PlayerEntity, AccountResponse> {

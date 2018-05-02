@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gmu.isa681.project.othelloserver.convertor.GameEntityToPlayingResponseConverter;
 import gmu.isa681.project.othelloserver.entity.GameEntity;
+import gmu.isa681.project.othelloserver.entity.PlayerEntity;
 import gmu.isa681.project.othelloserver.model.request.PlayingRequest;
-import gmu.isa681.project.othelloserver.model.response.PlayingResponse;
+import gmu.isa681.project.othelloserver.model.request.game.play.NewGameRequest;
+import gmu.isa681.project.othelloserver.model.response.game.PlayingResponse;
 import gmu.isa681.project.othelloserver.repository.GameRepository;
 import gmu.isa681.project.othelloserver.repository.PageableGameRepository;
+import gmu.isa681.project.othelloserver.repository.PlayerRepository;
 
 @RestController
 @RequestMapping(ResourceConstants.GAME_PLAYING_V1)
@@ -32,6 +35,9 @@ public class PlayingResource {
 
 	@Autowired
 	GameRepository gameRepository;
+
+	@Autowired
+	PlayerRepository playerRepository;
 
 	@Autowired
 	ConversionService conversionService;
@@ -52,8 +58,11 @@ public class PlayingResource {
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<PlayingResponse> createNewGame(@RequestBody PlayingRequest playingRequest) {
-		return new ResponseEntity<>(new PlayingResponse(), HttpStatus.CREATED);
+	public ResponseEntity<PlayingResponse> createNewGame(@RequestBody NewGameRequest newGameRequest) {
+		GameEntity game = conversionService.convert(newGameRequest, GameEntity.class);
+		gameRepository.save(game);
+		PlayingResponse playingResponse = conversionService.convert(game, PlayingResponse.class);
+		return new ResponseEntity<>(playingResponse, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

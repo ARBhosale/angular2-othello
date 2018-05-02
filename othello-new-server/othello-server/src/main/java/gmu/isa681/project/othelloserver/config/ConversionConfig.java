@@ -11,22 +11,24 @@ import org.springframework.core.convert.converter.Converter;
 
 import gmu.isa681.project.othelloserver.convertor.GameEntityToPlayingResponseConverter;
 import gmu.isa681.project.othelloserver.convertor.PlayerEntityToAccountResponseConverter;
+import gmu.isa681.project.othelloserver.convertor.game.NewGameRequestToGameEntityConverter;
 
 @Configuration
 public class ConversionConfig {
-	private Set<Converter> getConverters(){
+	private Set<Converter> getConverters() {
 		Set<Converter> converters = new HashSet<Converter>();
 		converters.add(new GameEntityToPlayingResponseConverter());
 		converters.add(new PlayerEntityToAccountResponseConverter());
+		converters.add(new NewGameRequestToGameEntityConverter());
 		return converters;
 	}
-	
+
 	@Bean
 	public ConversionService conversionService() {
 		ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
 		bean.setConverters(getConverters());
 		bean.afterPropertiesSet();
-		
+
 		return bean.getObject();
 	}
 }
