@@ -19,6 +19,35 @@ public class PlayerEntity {
 	private String lastName;
 	@NotNull
 	private String userName;
+	@NotNull
+	private String password;
+	private Long wins;
+	private Long losses;
+
+	public Long getWins() {
+		return wins;
+	}
+
+	public void setWins(Long wins) {
+		this.wins = wins;
+	}
+
+	public Long getLosses() {
+		return losses;
+	}
+
+	public void setLosses(Long losses) {
+		this.losses = losses;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -43,6 +72,7 @@ public class PlayerEntity {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public PlayerEntity(@NotNull String firstName, @NotNull String lastName, @NotNull String userName) {
 		super();
 		this.firstName = firstName;

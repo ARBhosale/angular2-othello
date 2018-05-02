@@ -1,18 +1,26 @@
-package gmu.isa681.project.othelloserver.model.request;
+package gmu.isa681.project.othelloserver.entity;
 
-public class UserAccountRequest {
+import org.hibernate.validator.constraints.UniqueElements;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name="User")
+public class UserEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String username;
-    private String data;
 
-
-    public UserAccountRequest() {
+    public UserEntity() {
         super();
     }
 
-    public UserAccountRequest(Long id, String username, String data)    {
+    @NotNull
+    private String username;
+
+    public UserEntity(@NotNull String username, @NotNull String data) {
         super();
-        this.id = id;
         this.username = username;
         this.data = data;
     }
@@ -40,4 +48,9 @@ public class UserAccountRequest {
     public void setData(String data) {
         this.data = data;
     }
+
+    @NotNull
+
+    private String data;
+
 }

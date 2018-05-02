@@ -33,4 +33,7 @@ public class AccountResource {
 		return new ResponseEntity<>(accountResponse, HttpStatus.OK);
 	}
 
+
+	}
+
 }

@@ -1,9 +1,20 @@
 package gmu.isa681.project.othelloserver.model.response;
 
+import gmu.isa681.project.othelloserver.model.Links;
+
 public class UserAccountRespose {
     private Long id;
     private String username;
     private String data;
+    private Links links;
+
+    public Links getLinks() {
+        return links;
+    }
+
+    public void setLinks(Links links) {
+        this.links = links;
+    }
 
     public UserAccountRespose() {
         super();
