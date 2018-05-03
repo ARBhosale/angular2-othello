@@ -21,7 +21,6 @@ public class ConversionConfig {
 		converters.add(new GameEntityToPlayingResponseConverter());
 		converters.add(new PlayerEntityToAccountResponseConverter());
 		converters.add(new NewGameRequestToGameEntityConverter());
-		converters.add(new PlayerEntityToAccountResponseConverter());
 		converters.add(new PlayerAccountRequestToPlayerEntity());
 		return converters;
 	}
