@@ -24,62 +24,45 @@ public class GameEntity {
 	private Integer playerBlackScore;
 
 	private Integer playerWhiteScore;
-	
+
 	private Integer timeLimitInMinutes;
 
 	public GameEntity(@NotNull Long playerWhoCreatedGameId) {
 		super();
 		this.gameCreatorPlayerId = playerWhoCreatedGameId;
 	}
-	
 
 	public Long getGameCreatorPlayerId() {
 		return gameCreatorPlayerId;
 	}
 
-
-
 	public void setGameCreatorPlayerId(Long gameCreatorPlayerId) {
 		this.gameCreatorPlayerId = gameCreatorPlayerId;
 	}
-
-
 
 	public Long getPlayerBlackId() {
 		return playerBlackId;
 	}
 
-
-
 	public void setPlayerBlackId(Long playerBlackId) {
 		this.playerBlackId = playerBlackId;
 	}
-
-
 
 	public Long getPlayerWhiteId() {
 		return playerWhiteId;
 	}
 
-
-
 	public void setPlayerWhiteId(Long playerWhiteId) {
 		this.playerWhiteId = playerWhiteId;
 	}
-
-
 
 	public Integer getTimeLimitInMinutes() {
 		return timeLimitInMinutes;
 	}
 
-
-
 	public void setTimeLimitInMinutes(Integer timeLimitInMinutes) {
 		this.timeLimitInMinutes = timeLimitInMinutes;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -115,6 +98,18 @@ public class GameEntity {
 
 	public GameEntity() {
 		super();
+	}
+
+	public void addOtherPlayer(PlayerEntity otherPlayer) {
+		if (id.equals(null) || gameCreatorPlayerId.equals(null)) {
+			return;
+		}
+
+		if (null == playerWhiteId) {
+			playerWhiteId = otherPlayer.getId();
+		} else {
+			playerBlackId = otherPlayer.getId();
+		}
 	}
 
 }

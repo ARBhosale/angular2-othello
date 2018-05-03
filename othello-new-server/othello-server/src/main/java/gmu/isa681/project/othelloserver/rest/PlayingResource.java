@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gmu.isa681.project.othelloserver.entity.GameEntity;
 import gmu.isa681.project.othelloserver.entity.PlayerEntity;
+import gmu.isa681.project.othelloserver.exception.GameNotFoundException;
+import gmu.isa681.project.othelloserver.exception.InvalidOperationException;
 import gmu.isa681.project.othelloserver.exception.PlayerNotFoundException;
-import gmu.isa681.project.othelloserver.model.request.PlayingRequest;
+import gmu.isa681.project.othelloserver.model.request.game.play.JoinGameRequest;
 import gmu.isa681.project.othelloserver.model.request.game.play.NewGameRequest;
 import gmu.isa681.project.othelloserver.model.response.game.PlayingResponse;
 import gmu.isa681.project.othelloserver.repository.GameRepository;
@@ -58,10 +60,7 @@ public class PlayingResource {
 
 	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<PlayingResponse> createNewGame(@RequestBody NewGameRequest newGameRequest) {
-		Optional<PlayerEntity> player = playerRepository.findById(newGameRequest.getRequestSenderPlayerId());
-		if (!player.isPresent()) {
-			throw new PlayerNotFoundException(newGameRequest.getRequestSenderPlayerId().toString());
-		}
+		checkForValidPlayer(newGameRequest.getRequestSenderPlayerId());
 		GameEntity game = conversionService.convert(newGameRequest, GameEntity.class);
 		gameRepository.save(game);
 		PlayingResponse playingResponse = conversionService.convert(game, PlayingResponse.class);
@@ -69,8 +68,34 @@ public class PlayingResource {
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<PlayingResponse> joinGame(@RequestBody PlayingRequest playingRequest) {
-		return new ResponseEntity<>(new PlayingResponse(), HttpStatus.OK);
+	public ResponseEntity<PlayingResponse> joinGame(@RequestBody JoinGameRequest joinGameRequest) {
+		GameEntity game = checkForValidGame(joinGameRequest.getGameId());
+		if (game.getGameCreatorPlayerId().equals(joinGameRequest.getRequestSenderPlayerId())) {
+			throw new InvalidOperationException("Wanna play with yourself?");
+		}
+		PlayerEntity player = checkForValidPlayer(joinGameRequest.getRequestSenderPlayerId());
+		game.addOtherPlayer(player);
+		gameRepository.save(game);
+		PlayingResponse playingResponse = conversionService.convert(game, PlayingResponse.class);
+		return new ResponseEntity<>(playingResponse, HttpStatus.OK);
+	}
+
+	private PlayerEntity checkForValidPlayer(Long playerId) {
+		Optional<PlayerEntity> player = playerRepository.findById(playerId);
+		if (!player.isPresent()) {
+			throw new PlayerNotFoundException(playerId.toString());
+		} else {
+			return player.get();
+		}
+	}
+
+	private GameEntity checkForValidGame(Long gameId) {
+		Optional<GameEntity> game = gameRepository.findById(gameId);
+		if (!game.isPresent()) {
+			throw new GameNotFoundException(gameId.toString());
+		} else {
+			return game.get();
+		}
 	}
 
 }
