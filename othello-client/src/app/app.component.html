@@ -1,4 +1,4 @@
-<h1>
+<!--<h1>
   {{title}}
 </h1>
 <div class="board-section">
@@ -6,19 +6,16 @@
 </div>
 <div class="score-section">
     <score [game]="game"></score>
-</div>
+</div>  
+-->
 
-<form>
-    <div>
-        <label for="username">Username</label>
-        <input id="username" type="text">
-    </div>
-    <div>
-            <label for="password">Password</label>
-            <input id="password" type="password">
-    </div>
-    <div>
-            <button type="submit">Submit</button>
-    </div>
-            
-</form>
+<app-login-form></app-login-form>
+
+<router-outlet></router-outlet>
+<!--<Register-User></Register-User>-->
+
+
+
+
+
+
