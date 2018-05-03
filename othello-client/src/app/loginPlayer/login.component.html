@@ -1,17 +1,13 @@
 <form [formGroup]="accountGroup" (ngSubmit)="onSubmit(accountGroup)">
 	<div class="input">
-		<label for="userName1">Username</label>
-        <input id="userName1" type="text" formControlName="userName1">
+		<label for="userName">Username</label>
+        <input id="userName" type="text" formControlName="userName">
 	</div>
 	<div class="input">
-		<label for="password1">Password</label>
-		<input id="password1" type="password" formControlName="password1">
+		<label for="password">Password</label>
+		<input id="password" type="password" formControlName="password">
 	</div>
 	<div class="input">
 		<input type="submit" value="Login">
 	</div>
-
-	<a routerLink="../create">Create a new account</a>
-	<!--<a href="www.google.com">Create a new account</a> -->
-	
 </form>

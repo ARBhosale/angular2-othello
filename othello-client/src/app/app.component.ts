@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from './services/game/game.service';
 import { Game } from './services/game/game';
+import { AccountService } from './services/account/account.service';
 
 
 
@@ -12,12 +13,17 @@ import { Game } from './services/game/game';
 export class AppComponent implements OnInit {
   title = 'app works!';
   game: Game;
+  public static BASE_URL: String = 'http://localhost:8080';
 
-  constructor(private gameService: GameService) {
+  constructor(private accountService: AccountService, private gameService: GameService) {
 
   }
 
   ngOnInit() {
     this.game = this.gameService.startNewGame();
+  }
+
+  public isAUserLoggedIn(): boolean {
+    return null !== this.accountService.loggedAccount
   }
 }

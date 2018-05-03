@@ -8,14 +8,11 @@
     <score [game]="game"></score>
 </div>  
 -->
+<h2>Welcome!</h2>
+<div *ngIf="accountService.loggedAccount">
+    <a routerLink="../login">Login</a>
+    <a routerLink="../create">Create a new account</a>
+</div>
 
-<app-login-form></app-login-form>
 
 <router-outlet></router-outlet>
-<!--<Register-User></Register-User>-->
-
-
-
-
-
-

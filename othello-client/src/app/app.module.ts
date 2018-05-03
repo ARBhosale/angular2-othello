@@ -8,6 +8,7 @@ import { LoginComponent } from './loginPlayer/login.component';
 import { CreateAccount } from './services/createPlayerAccount/createAccount.service';
 import { CreateAccountComponent } from './services/createPlayerAccount/createAccount.component';
 import { GameService } from './services/game/game.service';
+import { AccountService } from './services/account/account.service';
 import { BoardComponent } from './entities/board/component/board.component';
 import { DiscComponent } from './entities/disc/component/disc.component';
 import { ScoreComponent } from './entities/score/score.component';
@@ -31,7 +32,7 @@ import { routing } from './app.routing';
     ReactiveFormsModule,
     routing
   ],
-  providers: [GameService],
+  providers: [AccountService, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
