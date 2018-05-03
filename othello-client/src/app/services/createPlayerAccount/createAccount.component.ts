@@ -23,8 +23,8 @@ export class CreateAccountComponent implements OnInit{
       this.accountGroup= new FormGroup({
         userName: new FormControl(''),
         firstName: new FormControl(''),
-        lastName: new FormControl(' '),
-        password: new FormControl(' ')
+        lastName: new FormControl(''),
+        password: new FormControl('')
       });
 
     }

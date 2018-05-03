@@ -12,6 +12,7 @@ import { BoardComponent } from './entities/board/component/board.component';
 import { DiscComponent } from './entities/disc/component/disc.component';
 import { ScoreComponent } from './entities/score/score.component';
 
+import { routing } from './app.routing';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ScoreComponent } from './entities/score/score.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    routing
   ],
   providers: [GameService],
   bootstrap: [AppComponent]

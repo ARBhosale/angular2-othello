@@ -1,13 +1,17 @@
-<form (submit)="loginUser($event)">
+<form [formGroup]="accountGroup" (ngSubmit)="onSubmit(accountGroup)">
 	<div class="input">
-		<label>Username</label>
-		<input type="text">
+		<label for="userName1">Username</label>
+        <input id="userName1" type="text" formControlName="userName1">
 	</div>
 	<div class="input">
-		<label>Password</label>
-		<input type="password">
+		<label for="password1">Password</label>
+		<input id="password1" type="password" formControlName="password1">
 	</div>
 	<div class="input">
 		<input type="submit" value="Login">
 	</div>
+
+	<a routerLink="../create">Create a new account</a>
+	<!--<a href="www.google.com">Create a new account</a> -->
+	
 </form>

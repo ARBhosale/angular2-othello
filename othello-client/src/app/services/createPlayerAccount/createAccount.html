@@ -1,22 +1,22 @@
 <form [formGroup]="accountGroup" (ngSubmit)="onSubmit(accountGroup)">
-        <div>
+        <div class="input">
             <label for="userName">Username</label>
             <input id="userName" type="text" formControlName="userName">
         </div>
-        <div>
+        <div class="input">
                 <label for="firstName">firstName</label>
                 <input id="firstName" type="text" formControlName="firstName">
         </div>
-        <div>
-                <label for="lastName">lasttName</label>
+        <div class="input">
+                <label for="lastName">lastName</label>
                 <input id="lastName" type="text" formControlName="lastName">
         </div>
 
-        <div>
+        <div class="input">
                 <label for="password">Password</label>
                 <input id="password" type="password" formControlName="password">
         </div>
-        <div>
+        <div class="input">
                 <button type="submit">Submit</button>
         </div>
                 

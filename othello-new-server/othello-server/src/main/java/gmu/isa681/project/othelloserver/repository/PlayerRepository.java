@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface PlayerRepository extends CrudRepository<PlayerEntity, Long>{
     Optional<PlayerEntity> findById (Long id);
+    
+    Optional<PlayerEntity> findByUsername (String username); 
 }
