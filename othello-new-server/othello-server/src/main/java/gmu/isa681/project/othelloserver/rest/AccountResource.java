@@ -69,6 +69,9 @@ public class AccountResource {
 			@RequestBody
 					PlayerAccountRequest playerAccountRequest){
 		PlayerEntity playerEntity= conversionService.convert(playerAccountRequest, PlayerEntity.class);
+		if(!playerEntity.getUserName().matches("[a-zA-Z0-9\\\\._\\\\-]{1,}")){
+			return new ResponseEntity <AccountResponse>(HttpStatus.NO_CONTENT);
+		}
 
 		playerRepository.save(playerEntity);
 		AccountResponse accountResponse= conversionService.convert(playerEntity, AccountResponse.class);
