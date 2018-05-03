@@ -7,6 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import gmu.isa681.project.othelloserver.exception.InvalidOperationException;
+import gmu.isa681.project.othelloserver.model.Board;
+import gmu.isa681.project.othelloserver.model.BoardState;
+import gmu.isa681.project.othelloserver.model.Disc;
+import gmu.isa681.project.othelloserver.model.DiscType;
+
 @Entity
 @Table(name = "Game")
 public class GameEntity {
@@ -27,9 +33,67 @@ public class GameEntity {
 
 	private Integer timeLimitInMinutes;
 
+	private DiscType currentTurn;
+
+	private boolean currentPlayerHasMoves = true;
+
+	private Long currentBoardId;
+
 	public GameEntity(@NotNull Long playerWhoCreatedGameId) {
 		super();
 		this.gameCreatorPlayerId = playerWhoCreatedGameId;
+	}
+
+	public void playMove(int row, int col, BoardState boardState) {
+		boardState.setBoardPiece(row, col);
+		String moveResultMessage = boardState.getBoard().getMoveResultMessage();
+		if (!moveResultMessage.equals("")) {
+			throw new InvalidOperationException(moveResultMessage);
+		}
+	}
+
+	public void updatePlayerTurns() {
+		if (this.currentTurn == DiscType.White) {
+			this.currentTurn = DiscType.Black;
+		} else {
+			this.currentTurn = DiscType.White;
+		}
+	}
+
+	public void updateScores(Board boardBeingPlayed) {
+		this.playerBlackScore = 0;
+		this.playerWhiteScore = 0;
+		for (int i = 0; i < Board.NUMBER_OF_ROWS; i++) {
+			for (int j = 0; j < Board.NUMBER_OF_COLUMNS; j++) {
+				Disc disc = boardBeingPlayed.getValues().get(i).get(j);
+				if (null == disc) {
+					continue;
+				} else {
+					if (DiscType.White == disc.getDiscType()) {
+						this.playerWhiteScore++;
+					} else {
+						this.playerBlackScore++;
+					}
+				}
+			}
+		}
+	}
+
+	public String getMoveResultMessage(BoardState boardState) {
+		return boardState.getBoard().getMoveResultMessage();
+	}
+
+	// public void initializeGameBoardState() {
+	// this.boardState = new BoardState(this);
+	// this.boardState.initialize();
+	// }
+
+	public DiscType getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public void setCurrentTurn(DiscType currentTurn) {
+		this.currentTurn = currentTurn;
 	}
 
 	public Long getGameCreatorPlayerId() {
@@ -68,14 +132,6 @@ public class GameEntity {
 		return id;
 	}
 
-	public Long getPlayerWhoCreatedGame() {
-		return gameCreatorPlayerId;
-	}
-
-	public void setPlayerWhoCreatedGame(Long playerWhoCreatedGame) {
-		this.gameCreatorPlayerId = playerWhoCreatedGame;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -94,6 +150,22 @@ public class GameEntity {
 
 	public void setPlayerWhiteScore(Integer playerWhiteScore) {
 		this.playerWhiteScore = playerWhiteScore;
+	}
+
+	public boolean getCurrentPlayerHasMoves() {
+		return currentPlayerHasMoves;
+	}
+
+	public void setCurrentPlayerHasMoves(boolean currentPlayerHasMoves) {
+		this.currentPlayerHasMoves = currentPlayerHasMoves;
+	}
+
+	public Long getCurrentBoardId() {
+		return currentBoardId;
+	}
+
+	public void setCurrentBoardId(Long currentBoardId) {
+		this.currentBoardId = currentBoardId;
 	}
 
 	public GameEntity() {

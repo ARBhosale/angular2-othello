@@ -1,5 +1,6 @@
 package gmu.isa681.project.othelloserver.model.response.game;
 
+import gmu.isa681.project.othelloserver.model.DiscType;
 import gmu.isa681.project.othelloserver.model.Links;
 
 public class PlayingResponse {
@@ -14,7 +15,38 @@ public class PlayingResponse {
 	private Integer playerWhiteScore;
 
 	private Integer timeLimitInMinutes;
+
+	private boolean currentPlayerHasMoves = true;
+
+	private Long boardId;
+	
+	private DiscType currentTurn;
+
 	private Links links;
+
+	public Long getBoardId() {
+		return boardId;
+	}
+
+	public void setBoardId(Long boardId) {
+		this.boardId = boardId;
+	}
+
+	public DiscType getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public void setCurrentTurn(DiscType currentTurn) {
+		this.currentTurn = currentTurn;
+	}
+
+	public boolean isCurrentPlayerHasMoves() {
+		return currentPlayerHasMoves;
+	}
+
+	public void setCurrentPlayerHasMoves(boolean currentPlayerHasMoves) {
+		this.currentPlayerHasMoves = currentPlayerHasMoves;
+	}
 
 	public Long getGameId() {
 		return gameId;
