@@ -53,9 +53,8 @@ public class PlayingResource {
 
 	@RequestMapping(path = "/{gameId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<GameEntity> getGameById(@PathVariable Long gameId) {
-		Optional<GameEntity> gameEntity = gameRepository.findById(gameId);
-
-		return new ResponseEntity<>(gameEntity.get(), HttpStatus.OK);
+		GameEntity game = checkForValidGame(gameId);
+		return new ResponseEntity<>(game, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
