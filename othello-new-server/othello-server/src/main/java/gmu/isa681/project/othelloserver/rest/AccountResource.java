@@ -33,6 +33,7 @@ import gmu.isa681.project.othelloserver.repository.PlayerRepository;
 
 @RestController
 @RequestMapping(value = ResourceConstants.PLAYER_ACCOUNT_V1)
+@CrossOrigin
 public class AccountResource {
 
 	@Autowired
@@ -116,9 +117,7 @@ public class AccountResource {
 			@RequestBody
 					PlayerAccountRequest playerAccountRequest){
 		PlayerEntity playerEntity= conversionService.convert(playerAccountRequest, PlayerEntity.class);
-		if(!playerEntity.getUserName().matches("[a-zA-Z0-9\\\\._\\\\-]{3,}")){
-			return new ResponseEntity <>(HttpStatus.NO_CONTENT);
-		}
+
 		playerRepository.save(playerEntity);
 		AccountResponse accountResponse= conversionService.convert(playerEntity, AccountResponse.class);
 	
