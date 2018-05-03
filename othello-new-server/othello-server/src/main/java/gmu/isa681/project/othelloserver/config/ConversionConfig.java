@@ -3,6 +3,7 @@ package gmu.isa681.project.othelloserver.config;
 import java.util.HashSet;
 import java.util.Set;
 
+import gmu.isa681.project.othelloserver.convertor.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ConversionServiceFactoryBean;
@@ -20,6 +21,8 @@ public class ConversionConfig {
 		converters.add(new GameEntityToPlayingResponseConverter());
 		converters.add(new PlayerEntityToAccountResponseConverter());
 		converters.add(new NewGameRequestToGameEntityConverter());
+		converters.add(new PlayerEntityToAccountResponseConverter());
+		converters.add(new PlayerAccountRequestToPlayerEntity());
 		return converters;
 	}
 
