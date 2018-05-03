@@ -19,7 +19,16 @@ public class PlayerEntity {
 	private String lastName;
 	@NotNull
 	private String userName;
+
+	public PlayerEntity(@NotNull String firstName, @NotNull String lastName, @NotNull String userName, @NotNull String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.password = password;
+	}
+
 	@NotNull
+
 	private String password;
 	private Long wins;
 	private Long losses;
@@ -73,12 +82,7 @@ public class PlayerEntity {
 		this.userName = userName;
 	}
 
-	public PlayerEntity(@NotNull String firstName, @NotNull String lastName, @NotNull String userName) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-	}
+
 	public PlayerEntity() {
 		super();
 	}

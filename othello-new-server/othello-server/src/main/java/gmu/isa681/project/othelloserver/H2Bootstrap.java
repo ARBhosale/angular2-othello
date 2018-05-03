@@ -50,9 +50,9 @@ public class H2Bootstrap implements CommandLineRunner{
 		}
 
 		System.out.println("Creating 3 users");
-		playerRespository.save(new PlayerEntity("A","B","uc"));
-		playerRespository.save(new PlayerEntity("D","E","uF"));
-		playerRespository.save(new PlayerEntity("G","H","uI"));
+		playerRespository.save(new PlayerEntity("A","B","uc","pass1"));
+		playerRespository.save(new PlayerEntity("D","E","uF", "pass2"));
+		playerRespository.save(new PlayerEntity("G","H","uI","pass3"));
 	}
 
 }

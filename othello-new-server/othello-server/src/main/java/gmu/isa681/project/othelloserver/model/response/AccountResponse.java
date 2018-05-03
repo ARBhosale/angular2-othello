@@ -1,9 +1,59 @@
 package gmu.isa681.project.othelloserver.model.response;
 
+import gmu.isa681.project.othelloserver.model.Links;
+
 public class AccountResponse {
 	private Long id;
 	private String userName;
 	private String fullName;
+
+	private Long wins;
+	private Long losses;
+	private String firstName;
+	private String lastName;
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Long getWins() {
+		return wins;
+	}
+
+	public void setWins(Long wins) {
+		this.wins = wins;
+	}
+
+	public Long getLosses() {
+		return losses;
+	}
+
+	public void setLosses(Long losses) {
+		this.losses = losses;
+	}
+
+	public Links getLink() {
+		return link;
+	}
+
+	public void setLink(Links link) {
+		this.link = link;
+	}
+
+	private Links link;
 	public Long getId() {
 		return id;
 	}
@@ -22,11 +72,14 @@ public class AccountResponse {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-	public AccountResponse(String userName, String fullName) {
-		super();
+
+	public AccountResponse(String userName, String fullName, String firstName, String lastName) {
 		this.userName = userName;
 		this.fullName = fullName;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
+
 	public AccountResponse() {
 		super();
 	}

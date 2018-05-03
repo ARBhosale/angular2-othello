@@ -53,6 +53,7 @@ public class UserResource {
 
         return new ResponseEntity<>(userEntity.get(),HttpStatus.CREATED);
     }
+
     @RequestMapping(path="",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserAccountRespose> createUserAccount(
             @RequestBody
