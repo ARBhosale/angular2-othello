@@ -1,5 +1,7 @@
 package gmu.isa681.project.othelloserver;
 
+import gmu.isa681.project.othelloserver.entity.UserEntity;
+import gmu.isa681.project.othelloserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -23,9 +25,22 @@ public class H2Bootstrap implements CommandLineRunner{
 	@Autowired
 	UserRepository userRepository;
 
+
+
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+
+		userRepository.save(new UserEntity("talmeid2","hi Tyrone"));
+		userRepository.save(new UserEntity("tkarshi","hi Tanmay"));
+		userRepository.save(new UserEntity("anirsk","hi Aniket"));
+
+		Iterable<UserEntity> itr1= userRepository.findAll();
+		for(UserEntity userEntity:itr1){
+			System.out.println(userEntity.getUsername());
+		}
+
+
 		System.out.println("Getting games");
 		gameRepository.save(new GameEntity());
 		gameRepository.save(new GameEntity());
@@ -36,25 +51,11 @@ public class H2Bootstrap implements CommandLineRunner{
 		for(GameEntity game: itr) {
 			System.out.println(game.getId());
 		}
-		
+
 		System.out.println("Creating 3 users");
-		playerRespository.save(new PlayerEntity("A","B","uc"));
-		playerRespository.save(new PlayerEntity("D","E","uF"));
-		playerRespository.save(new PlayerEntity("G","H","uI"));
-		
-		
-		System.out.println("Creating 3 user accounts");
-		userRepository.save(new UserEntity("Aniket","aniket123"));
-		userRepository.save(new UserEntity("Tyrone","tyrone123"));
-		userRepository.save(new UserEntity("Tanmay","tanmay123"));
-		
-		Iterable<UserEntity> itr1 =userRepository.findAll();
-		
-		System.out.println("Printing the user accounts");
-		for(UserEntity user: itr1) {
-			System.out.println(user.getUsername());
-		}
-		
+		playerRespository.save(new PlayerEntity("A","B","uc","pass1"));
+		playerRespository.save(new PlayerEntity("D","E","uF", "pass2"));
+		playerRespository.save(new PlayerEntity("G","H","uI","pass3"));
 	}
 
 }
