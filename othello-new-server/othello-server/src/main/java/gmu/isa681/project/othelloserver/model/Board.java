@@ -44,7 +44,7 @@ public class Board {
 		for (int row = 0; row < Board.NUMBER_OF_ROWS; row++) {
 			for (int col = 0; col < Board.NUMBER_OF_COLUMNS; col++) {
 				Disc disc = valuesToConvert.get(row).get(col);
-				if (null == disc) {
+				if (null == disc.getDiscType()) {
 					convertedValues += "0";
 				} else if (disc.getDiscType() == DiscType.Black) {
 					convertedValues += "1";
@@ -61,10 +61,11 @@ public class Board {
 		for (int row = 0; row < Board.NUMBER_OF_ROWS; row++) {
 			this.values.add((new ArrayList()));
 			for (int col = 0; col < Board.NUMBER_OF_COLUMNS; col++) {
-				if (null != boardToInitializeFrom && null != boardToInitializeFrom.getValues().get(row).get(col)) {
-					this.values.get(row).set(col, boardToInitializeFrom.getValues().get(row).get(col).getCopy());
+				if (null != boardToInitializeFrom
+						&& null != boardToInitializeFrom.getValues().get(row).get(col).getDiscType()) {
+					this.values.get(row).add(boardToInitializeFrom.getValues().get(row).get(col).getCopy());
 				} else {
-					this.values.get(row).add(null);
+					this.values.get(row).add(new Disc(null, row, col));
 				}
 			}
 		}
@@ -87,9 +88,9 @@ public class Board {
 		ArrayList<Disc> discs = new ArrayList();
 		for (int i = 0; i < discsToGet.size(); i++) {
 			Disc discToGet = discsToGet.get(i);
-			if (discsToGet.isEmpty()) {
-				discs.add(null);
-			}
+			// if (discsToGet.isEmpty()) {
+			// discs.add(new Disc(null, ));
+			// }
 			discs.add(this.values.get(discToGet.getRow()).get(discToGet.getCol()));
 		}
 		return discs;
@@ -183,13 +184,12 @@ public class Board {
 			// left of current move
 			for (int i = index - 1; i >= 0; i--) {
 				Disc boardDisc = listOfDiscs.get(i);
-
-				if (null != boardDisc && i == 0) {
-					leftApparentOutflankedDiscs = new ArrayList();
-				}
-				if (null != boardDisc) {
+				if (null == boardDisc.getDiscType()) {
 					leftApparentOutflankedDiscs = new ArrayList();
 					break;
+				}
+				if (null == boardDisc.getDiscType() && i == 0) {
+					leftApparentOutflankedDiscs = new ArrayList();
 				}
 
 				if (boardDisc.getDiscType() != userDiscType) {
@@ -206,14 +206,13 @@ public class Board {
 			ArrayList<Disc> rightApparentOutflankedDiscs = new ArrayList();
 			for (int i = index + 1; i < listOfDiscs.size(); i++) {
 				Disc boardDisc = listOfDiscs.get(i);
-
-				if (null != boardDisc && i == listOfDiscs.size() - 1) {
-					rightApparentOutflankedDiscs = new ArrayList();
-					continue;
-				}
-				if (null != boardDisc) {
+				if (null == boardDisc.getDiscType()) {
 					rightApparentOutflankedDiscs = new ArrayList();
 					break;
+				}
+				if (null == boardDisc.getDiscType() && i == listOfDiscs.size() - 1) {
+					rightApparentOutflankedDiscs = new ArrayList();
+					continue;
 				}
 
 				if (boardDisc.getDiscType() != userDiscType) {
@@ -267,7 +266,7 @@ public class Board {
 		for (int row = 0; row < Board.NUMBER_OF_ROWS; row++) {
 			for (int col = 0; col < Board.NUMBER_OF_COLUMNS; col++) {
 				Disc disc = this.values.get(row).get(col);
-				if (null == disc) {
+				if (null == disc.getDiscType()) {
 					continue;
 				}
 				ArrayList<Disc> outFlankedDiscs = this.getOutflankedDiscs(row, col);
@@ -282,7 +281,7 @@ public class Board {
 	private int getIndexOfMoveDisc(int userMoveRow, int userMovCol, DiscType userDiscType,
 			ArrayList<Disc> listOfDiscs) {
 		for (int i = 0; i < listOfDiscs.size(); i++) {
-			if (listOfDiscs.get(i) == null) {
+			if (listOfDiscs.get(i).getDiscType() == null) {
 				continue;
 			}
 			if (listOfDiscs.get(i).getDiscType() == DiscType.Move) {

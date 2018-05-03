@@ -66,7 +66,7 @@ public class GameEntity {
 		for (int i = 0; i < Board.NUMBER_OF_ROWS; i++) {
 			for (int j = 0; j < Board.NUMBER_OF_COLUMNS; j++) {
 				Disc disc = boardBeingPlayed.getValues().get(i).get(j);
-				if (null == disc) {
+				if (null == disc.getDiscType()) {
 					continue;
 				} else {
 					if (DiscType.White == disc.getDiscType()) {
