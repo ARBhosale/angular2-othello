@@ -39,6 +39,10 @@ export class GameService {
         let options = new RequestOptions({ headers: headers });
         return this.http
             .post(GameService.PLAY_MOVE_URL, body, options)
-            .toPromise();
+            .toPromise()
+            .catch(error => {
+                console.log(error);
+                throw error;
+            });
     }
 }

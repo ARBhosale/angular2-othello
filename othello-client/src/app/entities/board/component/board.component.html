@@ -14,7 +14,7 @@
         </div>
     </div>
     <div>
-        <button (click)="undoMove()">Undo</button>
+        <!-- <button (click)="undoMove()">Undo</button> -->
     </div>
     <div class="invalid-move" *ngIf="boardState.states && boardState.getCurrentState().actionResultMessage">
         <span>{{boardState.getCurrentState().actionResultMessage}}</span>

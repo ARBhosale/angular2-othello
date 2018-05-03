@@ -19,6 +19,10 @@ export class BoardState {
         this.pushNewState(newBoard);
     }
 
+    public updateGame(gameResponse: any) {
+
+    }
+
     public pushNewState(board: Board): void {
         if (this.currentStateIndex === this.states.length - 1) {
             this.states.push(board);
@@ -72,11 +76,14 @@ export class BoardState {
         console.log(board.values);
         console.log('Player ' + this.game.currentPlayer.discType + ' played: Row = ' + rowNum + ', Col = ' + colNum);
         this.game.playMove(rowNum, colNum)
-            .then((updatedGame) => {
+            .then((response: any) => {
+                let updatedGame = JSON.parse(response._body);
+
                 let newBoard = board.getCopy();
                 newBoard.values[rowNum][colNum] = new Disc(this.game.currentPlayer.discType, rowNum, colNum);
                 newBoard.flipDiscs(newBoard.getSameDiscs(outFlankedDiscs), this.game.currentPlayer.discType);
-                this.game.updateScores(newBoard);
+                // this.game.updateScores(newBoard);
+                this.game.updateScoresFromServer(updatedGame);
                 this.game.updatePlayerTurns();
                 console.log('Board after: ');
                 console.log(newBoard.values);
@@ -85,7 +92,8 @@ export class BoardState {
                 this.performNoMoveActions();
             })
             .catch((error) => {
-                board.actionResultMessage = error;
+                let jError = JSON.parse(error._body);
+                board.actionResultMessage = jError.message;
             });
     }
 

@@ -33,6 +33,14 @@ export class Game {
         // this.nextPlayer.currentScore -= numberOfDiscsFlipped;
     }
 
+    public updateScoresFromServer(serverResponse: any) {
+        if (this.currentPlayer.discType === DiscType.Black) {
+            this.currentPlayer.currentScore = serverResponse.playerBlackScore;
+        } else {
+            this.currentPlayer.currentScore = serverResponse.playerWhiteScore;
+        }
+    }
+
     public updatePlayerTurns(): void {
         let temp = this.currentPlayer;
         this.currentPlayer = this.nextPlayer;
