@@ -9,7 +9,7 @@
 </div>  
 -->
 <h2>Welcome!</h2>
-<div *ngIf="accountService.loggedAccount">
+<div *ngIf="!accountService.loggedAccount">
     <a routerLink="../login">Login</a>
     <a routerLink="../create">Create a new account</a>
 </div>

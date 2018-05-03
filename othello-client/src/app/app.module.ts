@@ -14,6 +14,7 @@ import { DiscComponent } from './entities/disc/component/disc.component';
 import { ScoreComponent } from './entities/score/score.component';
 
 import { routing } from './app.routing';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { routing } from './app.routing';
     DiscComponent,
     ScoreComponent,
     LoginComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

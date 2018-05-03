@@ -6,13 +6,14 @@ import { Http, Response, Headers, RequestOptions, URLSearchParams }
 import 'rxjs/add/operator/toPromise';
 import { AppComponent } from "../../app.component";
 import { Account } from './account';
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AccountService {
 
     loggedAccount: Account = null;
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private router: Router) {
 
     }
 
@@ -29,6 +30,7 @@ export class AccountService {
             .then((response) => {
                 console.log(response);
                 this.loggedAccount = new Account(response);
+                this.router.navigateByUrl('/dashboard');
             })
             .catch(error => {
                 console.log(error);
