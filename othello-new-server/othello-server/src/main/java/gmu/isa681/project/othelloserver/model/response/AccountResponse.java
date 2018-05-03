@@ -6,6 +6,14 @@ public class AccountResponse {
 	private Long id;
 	private String userName;
 	private String fullName;
+	private Links links;
+	
+	public Links getLinks() {
+		return links;
+	}
+	public void setLinks(Links links) {
+		this.links = links;
+	}
 
 	private Long wins;
 	private Long losses;
@@ -44,16 +52,7 @@ public class AccountResponse {
 	public void setLosses(Long losses) {
 		this.losses = losses;
 	}
-
-	public Links getLink() {
-		return link;
-	}
-
-	public void setLink(Links link) {
-		this.link = link;
-	}
-
-	private Links link;
+	
 	public Long getId() {
 		return id;
 	}

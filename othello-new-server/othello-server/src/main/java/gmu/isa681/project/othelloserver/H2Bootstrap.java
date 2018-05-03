@@ -12,11 +12,11 @@ import gmu.isa681.project.othelloserver.repository.GameRepository;
 import gmu.isa681.project.othelloserver.repository.PlayerRepository;
 
 @Component
-public class H2Bootstrap implements CommandLineRunner{
-	
+public class H2Bootstrap implements CommandLineRunner {
+
 	@Autowired
 	GameRepository gameRepository;
-	
+
 	@Autowired
 	PlayerRepository playerRespository;
 
@@ -27,32 +27,22 @@ public class H2Bootstrap implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("Creating 3 players");
+		PlayerEntity player1 = new PlayerEntity("A", "B", "uc","p1");
+		PlayerEntity player2 = new PlayerEntity("D", "E", "uF","p2");
+		PlayerEntity player3 = new PlayerEntity("G", "H", "uI","p3");
 
-		userRepository.save(new UserEntity("talmeid2","hi Tyrone"));
-		userRepository.save(new UserEntity("tkarshi","hi Tanmay"));
-		userRepository.save(new UserEntity("anirsk","hi Aniket"));
+		playerRespository.save(player1);
+		playerRespository.save(player2);
+		playerRespository.save(player3);
 
-		Iterable<UserEntity> itr1= userRepository.findAll();
-		for(UserEntity userEntity:itr1){
-			System.out.println(userEntity.getUsername());
-		}
+		System.out.println("Creating 1 game with first player created");
 
+		GameEntity game1 = new GameEntity(player1.getId());
 
-		System.out.println("Getting games");
-		gameRepository.save(new GameEntity());
-		gameRepository.save(new GameEntity());
-		gameRepository.save(new GameEntity());
-		
-		Iterable<GameEntity> itr = gameRepository.findAll();
-		System.out.println("Printing games");
-		for(GameEntity game: itr) {
-			System.out.println(game.getId());
-		}
+		System.out.println("A game started by: " + game1.getPlayerWhoCreatedGame());
 
-		System.out.println("Creating 3 users");
-		playerRespository.save(new PlayerEntity("A","B","uc","pass1"));
-		playerRespository.save(new PlayerEntity("D","E","uF", "pass2"));
-		playerRespository.save(new PlayerEntity("G","H","uI","pass3"));
+		gameRepository.save(game1);
 	}
 
 }

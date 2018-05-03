@@ -5,7 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 import gmu.isa681.project.othelloserver.entity.GameEntity;
 import gmu.isa681.project.othelloserver.model.Links;
 import gmu.isa681.project.othelloserver.model.Self;
-import gmu.isa681.project.othelloserver.model.response.PlayingResponse;
+import gmu.isa681.project.othelloserver.model.response.game.PlayingResponse;
 import gmu.isa681.project.othelloserver.rest.ResourceConstants;
 
 public class GameEntityToPlayingResponseConverter implements Converter<GameEntity, PlayingResponse> {
@@ -15,14 +15,18 @@ public class GameEntityToPlayingResponseConverter implements Converter<GameEntit
 		// TODO Auto-generated method stub
 
 		PlayingResponse playingResponse = new PlayingResponse(source.getId());
-		playingResponse.setGameNumber(source.getId());
-		playingResponse.setHasBlack(true);
+
+		playingResponse.setPlayerBlackId(source.getPlayerBlackId());
+		playingResponse.setPlayerWhiteId(source.getPlayerWhiteId());
+		playingResponse.setPlayerBlackScore(source.getPlayerBlackScore());
+		playingResponse.setPlayerWhiteScore(source.getPlayerWhiteScore());
+		playingResponse.setTimeLimitInMinutes(source.getTimeLimitInMinutes());
 
 		Links links = new Links();
 		Self self = new Self();
 		self.setRef(ResourceConstants.GAME_PLAYING_V1 + "/" + source.getId());
 		links.setSelf(self);
-		
+
 		playingResponse.setLinks(links);
 
 		return playingResponse;

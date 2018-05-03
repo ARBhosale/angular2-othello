@@ -1,7 +1,7 @@
 package gmu.isa681.project.othelloserver.model.request;
 
 public class PlayerAccountRequest {
-    private String UserName;
+    private String userName;
     private String firstName;
     private String lastName;
     private String password;
@@ -11,18 +11,18 @@ public class PlayerAccountRequest {
     }
 
     public PlayerAccountRequest(String userName, String firstName, String lastName, String password) {
-        this.UserName = userName;
+        this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public String getFirstName() {
