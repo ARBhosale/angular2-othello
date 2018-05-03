@@ -63,6 +63,54 @@ public class AccountResource {
 	}
 
 
+	
+	@RequestMapping(path="/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<AccountResponse> validateUser(
+//	public String validateUser(
+			@RequestBody
+			PlayerAccountRequest playerAccountRequest)
+	{
+		PlayerEntity playerEntity= conversionService.convert(playerAccountRequest, PlayerEntity.class);
+		
+		if(!playerEntity.getUserName().matches("[a-zA-Z0-9\\\\._\\\\-]{1,}")){
+			return new ResponseEntity <AccountResponse>(HttpStatus.NO_CONTENT);
+		}
+	//	System.out.println("requested username : "+playerEntity.getUserName());
+	//	AccountResponse accountResponse = conversionService.convert(playerEntity, AccountResponse.class); 
+	
+		
+		Iterable<PlayerEntity>itr= playerRepository.findAll();
+		Iterator<PlayerEntity> it= itr.iterator();
+		
+	//	System.out.println("Requested Id: "+playerEntity.getId());
+		
+		int flag=0;
+		PlayerEntity player = new PlayerEntity();
+		while(it.hasNext()){
+			player=it.next();
+		//	System.out.println(player.getUserName());
+		//	System.out.println(player.getPassword());
+			if(player.getUserName().equals(playerEntity.getUserName()))
+				if(player.getPassword().equals(playerEntity.getPassword()))
+					{
+						flag=1;
+						break;
+					}
+		}
+		
+		if(flag==0)
+			return null;
+		
+		AccountResponse accountResponse = conversionService.convert(player, AccountResponse.class);
+		
+	//	System.out.println("Response Id: "+player.getId());
+		//return new ResponseEntity<>(accountResponse, HttpStatus.OK);	
+	//	System.out.println(new ResponseEntity<AccountResponse>(accountResponse, HttpStatus.ACCEPTED));
+	//	System.out.println(accountResponse.getFullName());
+		return new ResponseEntity<AccountResponse>(accountResponse, HttpStatus.ACCEPTED);
+		
+	}		
+	
 	@RequestMapping(path="",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<AccountResponse> createPlayerAccount(
 			@RequestBody
@@ -73,8 +121,9 @@ public class AccountResource {
 		}
 		playerRepository.save(playerEntity);
 		AccountResponse accountResponse= conversionService.convert(playerEntity, AccountResponse.class);
+	
 		return new ResponseEntity <>(accountResponse, HttpStatus.CREATED);
 	}
 
-
+	
 }
