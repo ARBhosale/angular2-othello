@@ -1,4 +1,4 @@
-package gmu.isa681.project.othelloserver.config;
+ package gmu.isa681.project.othelloserver.config;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,12 +10,16 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 
 import gmu.isa681.project.othelloserver.convertor.GameEntityToPlayingResponseConverter;
+import gmu.isa681.project.othelloserver.convertor.UserAccountRequestToUserEntityConverter;
+import gmu.isa681.project.othelloserver.convertor.UserEntityToUserAccountResponseConverter;
 
 @Configuration
 public class ConversionConfig {
 	private Set<Converter> getConverters(){
 		Set<Converter> converters = new HashSet<Converter>();
 		converters.add(new GameEntityToPlayingResponseConverter());
+		converters.add(new UserEntityToUserAccountResponseConverter());
+		converters.add(new UserAccountRequestToUserEntityConverter());
 		return converters;
 	}
 	
