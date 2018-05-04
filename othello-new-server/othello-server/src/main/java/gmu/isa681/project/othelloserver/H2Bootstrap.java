@@ -40,7 +40,7 @@ public class H2Bootstrap implements CommandLineRunner {
 
 		GameEntity game1 = new GameEntity(player1.getId());
 
-		System.out.println("A game started by: " + game1.getPlayerWhoCreatedGame());
+		System.out.println("A game started by: " + game1.getGameCreatorPlayerId());
 
 		gameRepository.save(game1);
 	}
