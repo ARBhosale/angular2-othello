@@ -15,6 +15,8 @@ import { ScoreComponent } from './entities/score/score.component';
 
 import { routing } from './app.routing';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NavComponent } from './nav/nav.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ScoreComponent,
     LoginComponent,
     CreateAccountComponent,
-    DashboardComponent
+    DashboardComponent,
+    NavComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

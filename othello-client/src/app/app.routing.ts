@@ -7,7 +7,7 @@ const appRoutes =[
     {path: 'login', component: LoginComponent},
     {path: 'create', component: CreateAccountComponent},
     {path: 'dashboard', component: DashboardComponent},
-    {path: '', pathMatch: 'full', redirectTo: 'add'}
+    {path: '', pathMatch: 'full', redirectTo: 'login'}
 
 ];
 

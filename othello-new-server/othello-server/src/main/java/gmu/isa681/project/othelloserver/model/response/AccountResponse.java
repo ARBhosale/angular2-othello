@@ -7,19 +7,18 @@ public class AccountResponse {
 	private String userName;
 	private String fullName;
 	private Links links;
-	
-	public Links getLinks() {
-		return links;
-	}
-	public void setLinks(Links links) {
-		this.links = links;
-	}
-
 	private Long wins;
 	private Long losses;
 	private String firstName;
 	private String lastName;
 
+	public Links getLinks() {
+		return links;
+	}
+
+	public void setLinks(Links links) {
+		this.links = links;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -52,22 +51,27 @@ public class AccountResponse {
 	public void setLosses(Long losses) {
 		this.losses = losses;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getFullName() {
 		return fullName;
 	}
+
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
