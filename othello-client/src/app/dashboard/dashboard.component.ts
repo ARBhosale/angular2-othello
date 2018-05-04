@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
-
 import { Account } from '../services/account/account';
 import { AccountService } from "../services/account/account.service";
+import { Router } from "@angular/router";
+
 
 @Component({
     selector: 'dashboard',
@@ -11,24 +12,15 @@ import { AccountService } from "../services/account/account.service";
 export class DashboardComponent implements OnInit {
 
     @Input() player: Account;
-    showCreateGameForm = false;
-    showJoinGameForm = false;
 
-    constructor(private accountService: AccountService) { }
+    constructor(private accountService: AccountService, private router: Router) { }
 
     ngOnInit() {
         if (!this.player) {
             this.player = this.accountService.loggedAccount;
         }
-    }
-
-    showCreateGame() {
-        this.showCreateGameForm = true;
-        this.showJoinGameForm = false;
-    }
-
-    showJoinGame() {
-        this.showCreateGameForm = false;
-        this.showJoinGameForm = true;
+        if (!this.player) {
+            this.router.navigateByUrl("login");
+        }
     }
 }

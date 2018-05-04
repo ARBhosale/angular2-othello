@@ -1,10 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.css";
-body {
-    padding-top: 5rem;
-  }
+
   .starter-template {
     padding: 3rem 1.5rem;
     text-align: center;
   }
+  .navbar {
+    margin-bottom: 0px;
+}
+.jumbotron{
+  height: 100vh;
+}
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
