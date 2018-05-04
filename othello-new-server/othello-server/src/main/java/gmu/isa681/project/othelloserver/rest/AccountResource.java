@@ -46,6 +46,7 @@ public class AccountResource {
 	@RequestMapping(path = "/{playerId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<AccountResponse> getPlayerById(@PathVariable Long playerId) {
 		Optional<PlayerEntity> player = playerRepository.findById(playerId);
+		System.out.println("Get player ID rest method called");
 		AccountResponse accountResponse = conversionService.convert(player.get(), AccountResponse.class);
 
 		return new ResponseEntity<>(accountResponse, HttpStatus.OK);
@@ -63,7 +64,7 @@ public class AccountResource {
 
 	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<AccountResponse> createPlayerAccount(@RequestBody PlayerAccountRequest playerAccountRequest) {
-
+		System.out.println("Creating player Account....");
 		String errors = "Errors: ";
 		Iterable<PlayerEntity> itr = playerRepository.findAll();
 		Iterator<PlayerEntity> players = itr.iterator();
@@ -88,17 +89,20 @@ public class AccountResource {
 			errors = errors + "Invalid last name ";
 		}
 		if (errors != "Errors: ") {
+			System.out.println("Failed to create Account due to following reasons: "+errors);
 			throw new InvalidCredentialsException(errors);
 		}
 		PlayerEntity playerEntity = conversionService.convert(playerAccountRequest, PlayerEntity.class);
 		playerRepository.save(playerEntity);
 		AccountResponse accountResponse = conversionService.convert(playerEntity, AccountResponse.class);
+		System.out.println("Account Created");
 		return new ResponseEntity<>(accountResponse, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(path = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<AccountResponse> validateUser(@RequestBody LoginRequest loginRequest) {
 
+		System.out.println("Attempting to Login....");
 		Iterable<PlayerEntity> itr = playerRepository.findAll();
 		Iterator<PlayerEntity> players = itr.iterator();
 
@@ -115,15 +119,18 @@ public class AccountResource {
 					playerFound = player;
 					break;
 				}
+				System.out.println("Failed to login. Invalid Credentials.");
 				throw new InvalidCredentialsException("Incorrect password");
 			}
 			if (!players.hasNext()) {
+				System.out.println("Failed to login. Invalid Credentials.");
 				throw new InvalidCredentialsException("Incorrect user name");
 			}
 
 		}
 
 		AccountResponse accountResponse = conversionService.convert(playerFound, AccountResponse.class);
+		System.out.println("Login Successful");
 		return new ResponseEntity<AccountResponse>(accountResponse, HttpStatus.ACCEPTED);
 
 	}
