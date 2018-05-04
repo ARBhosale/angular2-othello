@@ -65,11 +65,21 @@ public class AccountResource {
 	public ResponseEntity<AccountResponse> createPlayerAccount(@RequestBody PlayerAccountRequest playerAccountRequest) {
 
 		String errors = "Errors: ";
+		Iterable<PlayerEntity> itr = playerRepository.findAll();
+		Iterator<PlayerEntity> players = itr.iterator();
+
+		while (players.hasNext()){
+			PlayerEntity player = players.next();
+			if(player.getUserName().equals(playerAccountRequest.getUserName())){
+				errors= errors + "Username already exists, ";
+			}
+		}
+
 		if (!playerAccountRequest.getUserName().matches("[a-zA-Z0-9]{5,15}")) {
 			errors = errors + "Username must have length between 5-15 char, ";
 		}
-		if (!playerAccountRequest.getPassword().matches("[a-zA-Z0-9\\\\._\\\\-]{5,15}")) {
-			errors = errors + "Password must have length between 5-15 char, ";
+		if (!playerAccountRequest.getPassword().matches("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")) {
+			errors = errors + "Password format is invalid, ";
 		}
 		if (!playerAccountRequest.getFirstName().matches("[a-zA-Z\\\\._\\\\-]+")) {
 			errors = errors + "Invalid first name, ";
