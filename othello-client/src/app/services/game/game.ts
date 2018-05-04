@@ -1,12 +1,13 @@
 import { Player } from "../../entities/player/player";
 import { DiscType } from "../../entities/disc/disc";
 import { Board } from "../../entities/board/board";
+import { GameService } from "./game.service";
 
 export class Game {
     public currentPlayer: Player;
     public nextPlayer: Player;
 
-    constructor() {
+    constructor(private gameService: GameService) {
         this.currentPlayer = new Player(DiscType.Black);
         this.nextPlayer = new Player(DiscType.White);
     }
@@ -32,6 +33,14 @@ export class Game {
         // this.nextPlayer.currentScore -= numberOfDiscsFlipped;
     }
 
+    public updateScoresFromServer(serverResponse: any) {
+        if (this.currentPlayer.discType === DiscType.Black) {
+            this.currentPlayer.currentScore = serverResponse.playerBlackScore;
+        } else {
+            this.currentPlayer.currentScore = serverResponse.playerWhiteScore;
+        }
+    }
+
     public updatePlayerTurns(): void {
         let temp = this.currentPlayer;
         this.currentPlayer = this.nextPlayer;
@@ -40,7 +49,7 @@ export class Game {
 
     public playMove(rowNumber: number, colNumber): Promise<Game> {
         // call to play move which sends currentPlayer, moveRow, moveCol and return updated Game(scores) only
-        return Promise.resolve(this);
+        return this.gameService.makeMove(rowNumber, colNumber);
     }
 
     public undoMove(): Promise<Game> {

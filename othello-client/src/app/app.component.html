@@ -1,4 +1,4 @@
-<h1>
+<!--<h1>
   {{title}}
 </h1>
 <div class="board-section">
@@ -6,6 +6,13 @@
 </div>
 <div class="score-section">
     <score [game]="game"></score>
+</div>  
+-->
+<h2>Welcome!</h2>
+<div *ngIf="!accountService.loggedAccount">
+    <a routerLink="../login">Login</a>
+    <a routerLink="../create">Create a new account</a>
 </div>
 
-<Register-User></Register-User>
+
+<router-outlet></router-outlet>

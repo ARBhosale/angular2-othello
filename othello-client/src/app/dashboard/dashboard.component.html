@@ -1,0 +1,16 @@
+<div *ngIf="player">
+    Dashboard 
+    
+    <span>Hi {{player.firstName}}</span>
+    <button (click)="showCreateGame()">Create game</button>
+    <button (click)="showJoinGame()">Join game</button>
+
+    <div>
+        <div *ngIf="showCreateGameForm">
+            Fill create form:
+        </div>
+        <div *ngIf="showJoinGameForm">
+            On going games:
+        </div>
+    </div>
+</div>

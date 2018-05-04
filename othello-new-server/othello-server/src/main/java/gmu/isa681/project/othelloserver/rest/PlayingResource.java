@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gmu.isa681.project.othelloserver.entity.GameEntity;
 import gmu.isa681.project.othelloserver.entity.PlayerEntity;
+import gmu.isa681.project.othelloserver.entity.game.BoardEntity;
+import gmu.isa681.project.othelloserver.exception.BoardNotFoundException;
 import gmu.isa681.project.othelloserver.exception.GameNotFoundException;
 import gmu.isa681.project.othelloserver.exception.InvalidOperationException;
 import gmu.isa681.project.othelloserver.exception.PlayerNotFoundException;
+import gmu.isa681.project.othelloserver.model.Board;
+import gmu.isa681.project.othelloserver.model.BoardState;
+import gmu.isa681.project.othelloserver.model.DiscType;
 import gmu.isa681.project.othelloserver.model.request.game.play.JoinGameRequest;
+import gmu.isa681.project.othelloserver.model.request.game.play.MoveRequest;
 import gmu.isa681.project.othelloserver.model.request.game.play.NewGameRequest;
 import gmu.isa681.project.othelloserver.model.response.game.PlayingResponse;
 import gmu.isa681.project.othelloserver.repository.GameRepository;
 import gmu.isa681.project.othelloserver.repository.PageableGameRepository;
 import gmu.isa681.project.othelloserver.repository.PlayerRepository;
+import gmu.isa681.project.othelloserver.repository.game.BoardRepository;
 
 @RestController
 @RequestMapping(ResourceConstants.GAME_PLAYING_V1)
@@ -41,6 +49,9 @@ public class PlayingResource {
 	PlayerRepository playerRepository;
 
 	@Autowired
+	BoardRepository boardRepository;
+
+	@Autowired
 	ConversionService conversionService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -53,9 +64,8 @@ public class PlayingResource {
 
 	@RequestMapping(path = "/{gameId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<GameEntity> getGameById(@PathVariable Long gameId) {
-		Optional<GameEntity> gameEntity = gameRepository.findById(gameId);
-
-		return new ResponseEntity<>(gameEntity.get(), HttpStatus.OK);
+		GameEntity game = checkForValidGame(gameId);
+		return new ResponseEntity<>(game, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -75,9 +85,53 @@ public class PlayingResource {
 		}
 		PlayerEntity player = checkForValidPlayer(joinGameRequest.getRequestSenderPlayerId());
 		game.addOtherPlayer(player);
+
+		BoardState boardState = new BoardState(game);
+		Board board = boardState.initialize(null);
+
+		BoardEntity boardEntity = conversionService.convert(board, BoardEntity.class);
+		boardRepository.save(boardEntity);
+
+		game.setCurrentBoardId(boardEntity.getId());
+		game.updateScores(board);
+		game.setCurrentTurn(DiscType.Black);
 		gameRepository.save(game);
+
 		PlayingResponse playingResponse = conversionService.convert(game, PlayingResponse.class);
 		return new ResponseEntity<>(playingResponse, HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(path = "/play", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<PlayingResponse> playMove(@RequestBody MoveRequest moveRequest) {
+		GameEntity game = checkForValidGame(moveRequest.getGameId());
+		PlayerEntity player = checkForValidPlayer(moveRequest.getPlayerId());
+		BoardEntity boardEntity = checkForValidBoard(game.getCurrentBoardId());
+
+		BoardState boardState = new BoardState(game);
+		Board board = boardState.initialize(boardEntity);
+		Board newBoard = boardState.setBoardPiece(moveRequest.getInsertAtRow(), moveRequest.getInsertAtColumn());
+
+		if (null == newBoard) {
+			throw new InvalidOperationException(board.getMoveResultMessage());
+		} else {
+			BoardEntity newBoardEntity = conversionService.convert(newBoard, BoardEntity.class);
+			boardRepository.save(newBoardEntity);
+			game.setCurrentBoardId(newBoardEntity.getId());
+		}
+
+		gameRepository.save(game);
+		PlayingResponse playingResponse = conversionService.convert(game, PlayingResponse.class);
+		return new ResponseEntity<>(playingResponse, HttpStatus.CREATED);
+	}
+
+	private BoardEntity checkForValidBoard(Long boardId) {
+		Optional<BoardEntity> board = boardRepository.findById(boardId);
+		if (!board.isPresent()) {
+			throw new BoardNotFoundException(boardId.toString());
+		} else {
+			return board.get();
+		}
 	}
 
 	private PlayerEntity checkForValidPlayer(Long playerId) {

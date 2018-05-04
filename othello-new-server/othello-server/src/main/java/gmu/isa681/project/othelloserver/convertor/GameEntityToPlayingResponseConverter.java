@@ -15,12 +15,15 @@ public class GameEntityToPlayingResponseConverter implements Converter<GameEntit
 		// TODO Auto-generated method stub
 
 		PlayingResponse playingResponse = new PlayingResponse(source.getId());
-
+		
+		playingResponse.setBoardId(source.getCurrentBoardId());
 		playingResponse.setPlayerBlackId(source.getPlayerBlackId());
 		playingResponse.setPlayerWhiteId(source.getPlayerWhiteId());
 		playingResponse.setPlayerBlackScore(source.getPlayerBlackScore());
 		playingResponse.setPlayerWhiteScore(source.getPlayerWhiteScore());
 		playingResponse.setTimeLimitInMinutes(source.getTimeLimitInMinutes());
+		playingResponse.setCurrentPlayerHasMoves(source.getCurrentPlayerHasMoves());
+		playingResponse.setCurrentTurn(source.getCurrentTurn());
 
 		Links links = new Links();
 		Self self = new Self();
