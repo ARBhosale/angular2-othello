@@ -1,12 +1,15 @@
 <ng-container *ngIf="game && boardState">
-    <div class="turn-message">
-        {{getPlayerTurnMessage()}}
+    <div class="alert alert-primary" role="alert">
+        <span class="turn-message">
+            {{getPlayerTurnMessage()}}
+        </span>
     </div>
+
     <div class="board-container" *ngIf="boardState.states">
         <div class="board-row" *ngFor="let row of boardState.getCurrentState().values; let rowIndex = index">
             <div *ngFor="let col of row; let colIndex = index">
                 <div class="board-square" (click)="playMove(rowIndex, colIndex)">
-                    <span *ngIf="!boardState.getCurrentState().values[rowIndex][colIndex]">disc {{rowIndex}}&nbsp;{{colIndex}}</span>
+                    <!-- <span *ngIf="!boardState.getCurrentState().values[rowIndex][colIndex]">disc {{rowIndex}}&nbsp;{{colIndex}}</span> -->
                     <disc [disc]="boardState.getCurrentState().values[rowIndex][colIndex]"></disc>
                 </div>
             </div>
@@ -16,7 +19,7 @@
     <div>
         <!-- <button (click)="undoMove()">Undo</button> -->
     </div>
-    <div class="invalid-move" *ngIf="boardState.states && boardState.getCurrentState().actionResultMessage">
+    <div class="alert alert-secondary invalid-move" role="alert" *ngIf="boardState.states && boardState.getCurrentState().actionResultMessage">
         <span>{{boardState.getCurrentState().actionResultMessage}}</span>
     </div>
 </ng-container>

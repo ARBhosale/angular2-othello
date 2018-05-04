@@ -1,13 +1,11 @@
-<form [formGroup]="accountGroup" (ngSubmit)="onSubmit(accountGroup)">
-	<div class="input">
-		<label for="userName">Username</label>
-        <input id="userName" type="text" formControlName="userName">
+<form class="form-signin" [formGroup]="accountGroup" (ngSubmit)="onSubmit(accountGroup)">
+	<h2 class="form-signin-heading">Log in!</h2>
+	<label for="userName" class="sr-only">Username</label>
+	<input type="text" id="userName" formControlName="userName" class="form-control" placeholder="Username" required="" autofocus="">
+	<label for="inputPassword" class="sr-only">Password</label>
+	<input type="password" id="password" formControlName="password" class="form-control" placeholder="Password" required="">
+	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+		<span>{{errorMessage}}</span>
 	</div>
-	<div class="input">
-		<label for="password">Password</label>
-		<input id="password" type="password" formControlName="password">
-	</div>
-	<div class="input">
-		<input type="submit" value="Login">
-	</div>
+	<button class="btn btn-lg btn-primary btn-block" value="Login" type="submit">Log in</button>
 </form>

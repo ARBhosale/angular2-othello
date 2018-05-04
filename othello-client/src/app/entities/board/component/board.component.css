@@ -3,7 +3,7 @@
 }
 .board-square {
     padding: 5px;
-    background-color: aquamarine;
+    background-color: darkgreen;
     border-color: black;
     border-width: 2px;
     border-style: inset;
@@ -11,17 +11,18 @@
     width: 50px;
 }
 .board-row {
-    display: flex;
+    display: inline-block;
 }
 
 disc {
-    width: inherit;
-    height: inherit;
+    width: 40px;
+    height: 40px;
 }
 
 .turn-message {
     text-align: center;
     font: 15px bold;
+    display: block;
 }
 .invalid-move {
     text-align: center;

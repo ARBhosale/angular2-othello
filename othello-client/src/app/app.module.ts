@@ -17,6 +17,10 @@ import { routing } from './app.routing';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateGameComponent } from './createGame/creategame.component';
 import { ShowGamesComponent } from './showGames/showgames.component';
+import { NavComponent } from './nav/nav.component';
+import { FooterComponent } from './footer/footer.component';
+import { GameComponent } from './game/game.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +32,10 @@ import { ShowGamesComponent } from './showGames/showgames.component';
     CreateAccountComponent,
     DashboardComponent,
     CreateGameComponent,
-    ShowGamesComponent
+    ShowGamesComponent,
+    NavComponent,
+    FooterComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,

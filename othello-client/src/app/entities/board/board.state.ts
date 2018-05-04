@@ -77,13 +77,20 @@ export class BoardState {
         console.log('Player ' + this.game.currentPlayer.discType + ' played: Row = ' + rowNum + ', Col = ' + colNum);
         this.game.playMove(rowNum, colNum)
             .then((response: any) => {
-                let updatedGame = JSON.parse(response._body);
+                let updatedGame = null;
+                if (response && response._body) {
+                    updatedGame = JSON.parse(response._body);
+                }
 
                 let newBoard = board.getCopy();
                 newBoard.values[rowNum][colNum] = new Disc(this.game.currentPlayer.discType, rowNum, colNum);
                 newBoard.flipDiscs(newBoard.getSameDiscs(outFlankedDiscs), this.game.currentPlayer.discType);
-                // this.game.updateScores(newBoard);
-                this.game.updateScoresFromServer(updatedGame);
+                if (updatedGame) {
+                    this.game.updateScoresFromServer(updatedGame);
+                } else {
+                    this.game.updateScores(newBoard);
+                }
+
                 this.game.updatePlayerTurns();
                 console.log('Board after: ');
                 console.log(newBoard.values);

@@ -1,18 +1,8 @@
-<!--<h1>
-  {{title}}
-</h1>
-<div class="board-section">
-    <board [game]="game"></board>
-</div>
-<div class="score-section">
-    <score [game]="game"></score>
-</div>  
--->
-<h2>Welcome!</h2>
-<div *ngIf="!accountService.loggedAccount">
-    <a routerLink="../login">Login</a>
-    <a routerLink="../create">Create a new account</a>
-</div>
+<app-nav></app-nav>
+<div [class]="getJumbotronCssClass()">
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
 
-
-<router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>

@@ -14,6 +14,8 @@ import { AccountService } from '../services/account/account.service';
 })
 export class LoginComponent implements OnInit {
 
+  errorMessage: any = null;
+
   constructor(private http: Http, private accountService: AccountService) { }
 
   public submitted: boolean;
@@ -28,8 +30,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit({ value, valid }: { value: loginAccount, valid: boolean }) {
-   this.accountService.login(value);
-  //  console.log(this.promise);
+    this.errorMessage = null;
+    this.accountService.login(value)
+      .catch(error => {
+        let errorObj = JSON.parse(error._body);
+        this.errorMessage = errorObj.message;;
+      });
   }
 }
 

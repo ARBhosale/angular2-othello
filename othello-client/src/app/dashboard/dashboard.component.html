@@ -1,16 +1,35 @@
 <div *ngIf="player">
-    Dashboard 
-    
-    <span>Hi {{player.firstName}}</span>
-    <button (click)="showCreateGame()">Create a new game</button>
-    <button (click)="showJoinGame()">Show available games</button>
 
-    <div>
-        <div *ngIf="showCreateGameForm">
-            <creategame></creategame>
-        </div>
-        <div *ngIf="showJoinGameForm">
+    <span>Hi {{player.firstName}}</span>
+
+
+
+    <div class="text-center">
+        <div class="container">
             <showgames></showgames>
+        </div>
+    </div>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-6 box-shadow">
+                        <div class="card-body">
+                            <p class="card-text">Show player stats here</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-6 box-shadow">
+                        <div class="card-body">
+                            <p class="card-text"><creategame></creategame> </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

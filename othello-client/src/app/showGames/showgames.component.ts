@@ -16,6 +16,7 @@ export class ShowGamesComponent implements OnInit {
 
     id: Number;
     showg = false;
+    allGames = [];
 
     constructor(private accountService: AccountService, private http: Http, private gameService: GameService) { }
 
@@ -26,22 +27,20 @@ export class ShowGamesComponent implements OnInit {
         if (!this.player) {
             this.player = this.accountService.loggedAccount;
         }
+
+        this.gameService.showAvailableGames()
+                .then(result => {
+                    console.log("Hi "+result)
+                    let games = JSON.parse(result).content;
+                    console.log("Games "+games)
+                    });
+
+              //  .catch(error) => console.log(error));
+
         this.id=this.player['id'];
-
-        this.createGameGroup = new FormGroup({
-            isBlack: new FormControl(),
-            gameTime: new FormControl(),
-        })
     }
 
-    show(){
-        this.showg=true;
-    }
-
-    hi(){
-
-    }
-
+    
     onSubmit({ value, valid }: { value: joinGame, valid: boolean}) {
 
 
