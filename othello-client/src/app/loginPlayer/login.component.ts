@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   public submitted: boolean;
   accountGroup: FormGroup;
+  //promise: Promise<any>;
 
   ngOnInit() {
     this.accountGroup = new FormGroup({
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit({ value, valid }: { value: loginAccount, valid: boolean }) {
-    this.accountService.login(value);
+   this.accountService.login(value);
+  //  console.log(this.promise);
   }
 }
 

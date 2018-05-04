@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-
+import { FormControl, FormGroup } from '@angular/forms';
 import { Account } from '../services/account/account';
 import { AccountService } from "../services/account/account.service";
 
@@ -15,6 +15,8 @@ export class DashboardComponent implements OnInit {
     showJoinGameForm = false;
 
     constructor(private accountService: AccountService) { }
+
+    createGameGroup: FormGroup;
 
     ngOnInit() {
         if (!this.player) {

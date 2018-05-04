@@ -8,6 +8,22 @@
     <div>
         <div *ngIf="showCreateGameForm">
             Fill create form:
+            <form [formGroup]="createGameGroup" (ngSubmit)="onSubmit(createGameGroup)">
+            <div class="input">
+                <label for="isBlack">Is Black?</label>
+                <input id="isBlack" type="radio" formControlName="isBlack">
+            </div>
+            <div>
+            <label for="gameTime">Game time limit:</label>
+            <select name="gameTime">
+                <option value="one">1</option>
+                <option value="two">2</option>
+                <option value="three">3</option>
+                <option value="four">4</option>
+                <option value="five">5</option>
+              </select>
+            </div>  
+            </form>
         </div>
         <div *ngIf="showJoinGameForm">
             On going games:
