@@ -19,6 +19,15 @@ public class PlayerEntity {
 	private String lastName;
 	@NotNull
 	private String userName;
+	private String salt;
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
 
 	public PlayerEntity(@NotNull String firstName, @NotNull String lastName, @NotNull String userName, @NotNull String password) {
 		this.firstName = firstName;

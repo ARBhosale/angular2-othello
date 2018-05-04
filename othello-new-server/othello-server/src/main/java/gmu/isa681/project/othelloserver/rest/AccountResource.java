@@ -65,11 +65,24 @@ public class AccountResource {
 	public ResponseEntity<AccountResponse> createPlayerAccount(
 			@RequestBody
 					PlayerAccountRequest playerAccountRequest) {
-		PlayerEntity playerEntity = conversionService.convert(playerAccountRequest, PlayerEntity.class);
-		if (!playerEntity.getUserName().matches("[a-zA-Z0-9\\\\._\\\\-]{1,}")) {
-			return new ResponseEntity<AccountResponse>(HttpStatus.NO_CONTENT);
-		}
 
+		String errors="Errors: ";
+		if (!playerAccountRequest.getUserName().matches("[a-zA-Z0-9]{5,15}")) {
+			errors=errors+"Username must have length between 5-15 char, ";
+		}
+		if (!playerAccountRequest.getPassword().matches("[a-zA-Z0-9\\\\._\\\\-]{5,15}")) {
+			errors=errors+"Password must have length between 5-15 char, ";
+		}
+		if (!playerAccountRequest.getFirstName().matches("[a-zA-Z\\\\._\\\\-]+")) {
+			errors=errors+"Invalid first name, ";
+		}
+		if (!playerAccountRequest.getLastName().matches("[a-zA-Z\\\\._\\\\-]+")) {
+			errors=errors+"Invalid last name ";
+		}
+		if(errors!="Errors: "){
+			throw new InvalidCredentialsException(errors);
+		}
+		PlayerEntity playerEntity = conversionService.convert(playerAccountRequest, PlayerEntity.class);
 		playerRepository.save(playerEntity);
 		AccountResponse accountResponse = conversionService.convert(playerEntity, AccountResponse.class);
 		return new ResponseEntity<>(accountResponse, HttpStatus.CREATED);

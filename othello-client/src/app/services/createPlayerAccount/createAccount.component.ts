@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { AccountService } from '../account/account.service';
 
 @Component({
   selector: 'Register-User',
@@ -12,12 +13,12 @@ import 'rxjs/add/operator/catch';
 })
 export class CreateAccountComponent implements OnInit{
 
-    constructor(private http: Http){}
+    constructor(private http: Http, private accountService: AccountService ){}
     
     public submitted: boolean;
     accountGroup: FormGroup;
     private baseUrl: String = 'http://localhost:8080';
-  
+    private errorString: String=null;
 
     ngOnInit(){
       this.accountGroup= new FormGroup({
@@ -28,7 +29,7 @@ export class CreateAccountComponent implements OnInit{
       });
 
     }
-
+/*
     onSubmit({value,valid}: {value: createAccount, valid: boolean} ){
         console.log(value);
         let bodyString= JSON.stringify(value);
@@ -36,10 +37,19 @@ export class CreateAccountComponent implements OnInit{
         let option= new RequestOptions({headers: headers});
 
         console.log("bodystring : "+bodyString);
-        this.http.post(this.baseUrl+'/player/account/v1', bodyString, option)
+        this.resp= this.http.post(this.baseUrl+'/player/account/v1', bodyString, option)
                 .subscribe(res => console.log(res));
     }
-
+*/
+onSubmit({value,valid}: {value: createAccount, valid: boolean} ){
+      this.accountService.SignUp(value)
+      .catch(error => {
+        console.log(error);
+        let errorBody= JSON.parse(error._body);
+        console.log(errorBody.message);
+        this.errorString=errorBody.message;
+      });
+}
   
 }
 

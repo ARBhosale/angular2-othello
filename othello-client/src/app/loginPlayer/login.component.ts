@@ -27,7 +27,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit({ value, valid }: { value: loginAccount, valid: boolean }) {
-    this.accountService.login(value);
+    this.accountService.login(value)
+        .then(result => console.log(result))
+        .catch(error => console.log(error));
   }
 }
 
