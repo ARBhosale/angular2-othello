@@ -17,7 +17,7 @@ import { routing } from './app.routing';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
-
+import { PlayerStatsComponent } from './player.Stats/player.Stats.Component';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { FooterComponent } from './footer/footer.component';
     CreateAccountComponent,
     DashboardComponent,
     NavComponent,
-    FooterComponent
+    FooterComponent,
+    PlayerStatsComponent
   ],
   imports: [
     BrowserModule,

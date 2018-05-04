@@ -18,7 +18,7 @@ export class CreateAccountComponent implements OnInit {
   public submitted: boolean;
   accountGroup: FormGroup;
   private baseUrl: String = 'http://localhost:8080';
-  errorString: String = null;
+  private errorString: String = null;
 
   ngOnInit() {
     this.accountGroup = new FormGroup({

@@ -4,6 +4,7 @@
 	<input type="text" id="userName" formControlName="userName" class="form-control" placeholder="Username" required="" autofocus="">
 	<label for="inputPassword" class="sr-only">Password</label>
 	<input type="password" id="password" formControlName="password" class="form-control" placeholder="Password" required="">
+	
 	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
 		<span>{{errorMessage}}</span>
 	</div>
