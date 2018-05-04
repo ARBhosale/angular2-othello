@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   public submitted: boolean;
   accountGroup: FormGroup;
+  public errors:String;
 
   ngOnInit() {
     this.accountGroup = new FormGroup({
@@ -28,8 +29,10 @@ export class LoginComponent implements OnInit {
 
   onSubmit({ value, valid }: { value: loginAccount, valid: boolean }) {
     this.accountService.login(value)
-        .then(result => console.log(result))
-        .catch(error => console.log(error));
+        .catch(error =>{
+          console.log(error);
+          this.errors="Username or password Incorrect";
+        });
   }
 }
 

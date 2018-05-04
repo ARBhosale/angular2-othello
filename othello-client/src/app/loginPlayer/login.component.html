@@ -1,4 +1,6 @@
 <form [formGroup]="accountGroup" (ngSubmit)="onSubmit(accountGroup)">
+
+	{{errors}}
 	<div class="input">
 		<label for="userName">Username</label>
         <input id="userName" type="text" formControlName="userName">
