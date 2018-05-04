@@ -1,4 +1,5 @@
 import { Player } from "../../entities/player/player";
+import { AppComponent } from "../../app.component";
 import { Injectable } from "@angular/core";
 import { DiscType } from "../../entities/disc/disc";
 import { Game } from "./game";
@@ -22,7 +23,31 @@ export class GameService {
         return newGame;
     }
 
-    public createNewGame(): void { }
+    public createNewGame(value) { 
+
+        let bodyString = value;
+        let headers= new Headers({'Content-Type': 'application/json'});
+        let option= new RequestOptions({headers: headers});
+
+      return  this.http.post(AppComponent.BASE_URL+'/game/playing/v1', bodyString, option)
+                .subscribe(res => console.log(res));
+    }
+
+    public showAvailableGames(): Promise<any> {
+
+        return this.http.get(AppComponent.BASE_URL + '/game/playing/v1')
+            .toPromise()
+            .then((response) => {
+                console.log(response);
+            //    let responsebody=JSON.parse(<any>response.json);
+            //    console.log(responsebody.content);
+            })
+            .catch(error => {
+                console.log(error);
+                throw error;
+            });
+    }   
+
     public joinGame(): void { }
 
 

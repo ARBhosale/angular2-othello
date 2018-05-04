@@ -15,7 +15,8 @@ import { ScoreComponent } from './entities/score/score.component';
 
 import { routing } from './app.routing';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
+import { CreateGameComponent } from './createGame/creategame.component';
+import { ShowGamesComponent } from './showGames/showgames.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ScoreComponent,
     LoginComponent,
     CreateAccountComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateGameComponent,
+    ShowGamesComponent
   ],
   imports: [
     BrowserModule,

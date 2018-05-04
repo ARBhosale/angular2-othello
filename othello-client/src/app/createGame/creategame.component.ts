@@ -4,20 +4,17 @@ import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Account } from '../services/account/account';
 import { AccountService } from "../services/account/account.service";
 import { GameService } from "../services/game/game.service";
-import { ShowGamesComponent } from "../showGames/showgames.component";
 
 @Component({
-    selector: 'dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css']
+    selector: 'creategame',
+    templateUrl: './creategame.component.html',
+    styleUrls: ['./creategame.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class CreateGameComponent implements OnInit {
 
     @Input() player: Account;
-    showCreateGameForm = false;
-    showJoinGameForm = false;
+    
     id: Number;
-    showgames: ShowGamesComponent;
 
     constructor(private accountService: AccountService, private http: Http, private gameService: GameService) { }
 
@@ -36,21 +33,28 @@ export class DashboardComponent implements OnInit {
         })
     }
 
-    
-    showCreateGame() {
-        this.showCreateGameForm = true;
-        this.showJoinGameForm = false;
+    onSubmit({ value, valid }: { value: createGame, valid: boolean}) {
+        console.log(value);
+        let isBlack=value.isBlack;
+        let gameTime=value.gameTime;
+        let id=this.id;
+
+        let bodyString=JSON.stringify({requestSenderPlayerId:id,isBlack:isBlack,gameTimeLimitInMinutes:gameTime})
+        
+        this.gameService.createNewGame(bodyString);
+        console.log(isBlack,gameTime,id);
+        console.log("bodystringNew : "+bodyString);
     }
 
-    showJoinGame() {
-        this.showCreateGameForm = false;
-        this.showJoinGameForm = true;
-        this.gameService.showAvailableGames();
-     //   .then((response) => {
-     //       console.log(response);
-     //   })
-    //    let showgames = new ShowGamesComponent(this.accountService, this.http, this.gameService)
-        //this.showgames.show();
-    }
+
 }
 
+export interface createGame {
+  isBlack: boolean;
+  gameTime: Number;
+}
+
+export interface joinGame {
+  isBlack: boolean;
+  gameTime: Number;
+}

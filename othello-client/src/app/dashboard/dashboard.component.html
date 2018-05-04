@@ -2,31 +2,15 @@
     Dashboard 
     
     <span>Hi {{player.firstName}}</span>
-    <button (click)="showCreateGame()">Create game</button>
-    <button (click)="showJoinGame()">Join game</button>
+    <button (click)="showCreateGame()">Create a new game</button>
+    <button (click)="showJoinGame()">Show available games</button>
 
     <div>
         <div *ngIf="showCreateGameForm">
-            Fill create form:
-            <form [formGroup]="createGameGroup" (ngSubmit)="onSubmit(createGameGroup)">
-            <div class="input">
-                <label for="isBlack">Is Black?</label>
-                <input id="isBlack" type="radio" formControlName="isBlack">
-            </div>
-            <div>
-            <label for="gameTime">Game time limit:</label>
-            <select name="gameTime">
-                <option value="one">1</option>
-                <option value="two">2</option>
-                <option value="three">3</option>
-                <option value="four">4</option>
-                <option value="five">5</option>
-              </select>
-            </div>  
-            </form>
+            <creategame></creategame>
         </div>
         <div *ngIf="showJoinGameForm">
-            On going games:
+            <showgames></showgames>
         </div>
     </div>
 </div>

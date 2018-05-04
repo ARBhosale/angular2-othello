@@ -37,6 +37,7 @@ import gmu.isa681.project.othelloserver.repository.game.BoardRepository;
 
 @RestController
 @RequestMapping(ResourceConstants.GAME_PLAYING_V1)
+@CrossOrigin
 public class PlayingResource {
 
 	@Autowired
@@ -54,6 +55,7 @@ public class PlayingResource {
 	@Autowired
 	ConversionService conversionService;
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Page<PlayingResponse> getAvailableGames(Pageable pageable) {
 

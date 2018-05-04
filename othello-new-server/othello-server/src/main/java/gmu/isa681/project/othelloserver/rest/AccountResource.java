@@ -78,7 +78,11 @@ public class AccountResource {
 				}
 				throw new InvalidCredentialsException("Incorrect password");
 			}
-			throw new InvalidCredentialsException("Incorrect user name");
+			if(!players.hasNext()) 
+			{	
+				throw new InvalidCredentialsException("Incorrect user name");
+			}
+			
 		}
 
 		AccountResponse accountResponse = conversionService.convert(playerFound, AccountResponse.class);
