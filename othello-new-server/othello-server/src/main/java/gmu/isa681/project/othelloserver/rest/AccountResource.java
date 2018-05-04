@@ -1,8 +1,10 @@
 package gmu.isa681.project.othelloserver.rest;
 
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.Optional;
 
+import gmu.isa681.project.othelloserver.security.SaltedHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
@@ -59,6 +61,31 @@ public class AccountResource {
 		return playerEntityList.map((e -> converter.convert(e)));
 	}
 
+	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<AccountResponse> createPlayerAccount(@RequestBody PlayerAccountRequest playerAccountRequest) {
+
+		String errors = "Errors: ";
+		if (!playerAccountRequest.getUserName().matches("[a-zA-Z0-9]{5,15}")) {
+			errors = errors + "Username must have length between 5-15 char, ";
+		}
+		if (!playerAccountRequest.getPassword().matches("[a-zA-Z0-9\\\\._\\\\-]{5,15}")) {
+			errors = errors + "Password must have length between 5-15 char, ";
+		}
+		if (!playerAccountRequest.getFirstName().matches("[a-zA-Z\\\\._\\\\-]+")) {
+			errors = errors + "Invalid first name, ";
+		}
+		if (!playerAccountRequest.getLastName().matches("[a-zA-Z\\\\._\\\\-]+")) {
+			errors = errors + "Invalid last name ";
+		}
+		if (errors != "Errors: ") {
+			throw new InvalidCredentialsException(errors);
+		}
+		PlayerEntity playerEntity = conversionService.convert(playerAccountRequest, PlayerEntity.class);
+		playerRepository.save(playerEntity);
+		AccountResponse accountResponse = conversionService.convert(playerEntity, AccountResponse.class);
+		return new ResponseEntity<>(accountResponse, HttpStatus.CREATED);
+	}
+
 	@RequestMapping(path = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<AccountResponse> validateUser(@RequestBody LoginRequest loginRequest) {
 
@@ -72,27 +99,23 @@ public class AccountResource {
 			// System.out.println(player.getUserName());
 			// System.out.println(player.getPassword());
 			if (player.getUserName().equals(loginRequest.getUserName())) {
-				if (player.getPassword().equals(loginRequest.getPassword())) {
+				byte[] salt = Base64.getDecoder().decode(player.getSalt());
+				String pwd = SaltedHash.getSaltHashedPassword(loginRequest.getPassword(), salt);
+				if (pwd != null && pwd.equals(player.getPassword())) {
 					playerFound = player;
 					break;
 				}
 				throw new InvalidCredentialsException("Incorrect password");
 			}
-			throw new InvalidCredentialsException("Incorrect user name");
+			if (!players.hasNext()) {
+				throw new InvalidCredentialsException("Incorrect user name");
+			}
+
 		}
 
 		AccountResponse accountResponse = conversionService.convert(playerFound, AccountResponse.class);
 		return new ResponseEntity<AccountResponse>(accountResponse, HttpStatus.ACCEPTED);
-	}
 
-	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<AccountResponse> createPlayerAccount(@RequestBody PlayerAccountRequest playerAccountRequest) {
-		PlayerEntity playerEntity = conversionService.convert(playerAccountRequest, PlayerEntity.class);
-
-		playerRepository.save(playerEntity);
-		AccountResponse accountResponse = conversionService.convert(playerEntity, AccountResponse.class);
-
-		return new ResponseEntity<>(accountResponse, HttpStatus.CREATED);
 	}
 
 }

@@ -32,10 +32,27 @@ export class AccountService {
                 this.loggedAccount = new Account(response);
                 this.router.navigateByUrl('/dashboard');
             })
-            .catch(error => {
-                console.log(error);
-                throw error;
-            });
+            .catch(this.handleError);
 
+    }
+
+    public SignUp(value): Promise<any> {
+        console.log(value);
+        let bodyString= JSON.stringify(value);
+        let headers= new Headers({'Content-Type': 'application/json'});
+        let option= new RequestOptions({headers: headers});
+        return this.http.post(AppComponent.BASE_URL + '/player/account/v1', bodyString, option)
+            .toPromise()
+            .then((response) => {
+                console.log(response);
+                this.loggedAccount = new Account(response);
+                this.router.navigateByUrl('/dashboard');
+            })
+            .catch(this.handleError);
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error);
+        return Promise.reject(error.message || error);
     }
 }
