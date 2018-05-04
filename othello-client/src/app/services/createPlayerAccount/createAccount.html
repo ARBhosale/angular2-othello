@@ -13,8 +13,8 @@
         <label for="password" class="sr-only">Password</label>
         <input id="password" type="password" formControlName="password" class="form-control" placeholder="create password" required=""
                 autofocus="">
-        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-                <span>{{errorMessage}}</span>
+        <div *ngIf="errorString" class="alert alert-danger" role="alert">
+                <span>{{errorString}}</span>
         </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>

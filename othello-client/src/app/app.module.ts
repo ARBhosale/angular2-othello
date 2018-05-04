@@ -17,6 +17,7 @@ import { routing } from './app.routing';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
+import { GameComponent } from './game/game.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { FooterComponent } from './footer/footer.component';
     CreateAccountComponent,
     DashboardComponent,
     NavComponent,
-    FooterComponent
+    FooterComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,

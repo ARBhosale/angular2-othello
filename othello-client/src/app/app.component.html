@@ -1,17 +1,5 @@
-<!--<h1>
-  {{title}}
-</h1>
-<div class="board-section">
-    <board [game]="game"></board>
-</div>
-<div class="score-section">
-    <score [game]="game"></score>
-</div>  
--->
-
-
 <app-nav></app-nav>
-<div class="jumbotron jumbotron-fluid">
+<div [class]="getJumbotronCssClass()">
     <div class="container">
         <router-outlet></router-outlet>
     </div>
