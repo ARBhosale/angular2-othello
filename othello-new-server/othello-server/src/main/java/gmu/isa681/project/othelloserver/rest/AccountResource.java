@@ -1,8 +1,10 @@
 package gmu.isa681.project.othelloserver.rest;
 
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.Optional;
 
+import gmu.isa681.project.othelloserver.security.SaltedHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
@@ -101,13 +103,18 @@ public class AccountResource {
 			// System.out.println(player.getUserName());
 			// System.out.println(player.getPassword());
 			if (player.getUserName().equals(loginRequest.getUserName())) {
-				if (player.getPassword().equals(loginRequest.getPassword())) {
-					playerFound = player;
+				byte[] salt= Base64.getDecoder().decode(player.getSalt());
+				String pwd= SaltedHash.getSaltHashedPassword(loginRequest.getPassword(), salt);
+				if(pwd!=null && pwd.equals(player.getPassword())){
+					playerFound=player;
 					break;
 				}
 				throw new InvalidCredentialsException("Incorrect password");
 			}
-			throw new InvalidCredentialsException("Incorrect user name");
+			if(!players.hasNext()){
+				throw new InvalidCredentialsException("Incorrect user name");
+			}
+
 		}
 
 		AccountResponse accountResponse = conversionService.convert(playerFound, AccountResponse.class);
