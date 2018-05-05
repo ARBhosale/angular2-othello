@@ -1,0 +1,24 @@
+Fill create form:
+            <form [formGroup]="createGameGroup" (ngSubmit)="onSubmit(createGameGroup)">
+           
+            <div>
+            <label for="isBlack">Do you want black?:</label>
+            <select name="isBlack" id="isBlack" formControlName="isBlack">
+                <option value=true>Yes</option>
+                <option value=false>No</option>
+            </select>
+            </div>
+            <div>
+            <label for="gameTime">Game time limit:</label>
+            <select name="gameTime" id="gameTime" formControlName="gameTime">
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+              </select>
+            </div> 
+            <div class="input">
+                <input type="submit" value="Create">
+            </div> 
+            </form>

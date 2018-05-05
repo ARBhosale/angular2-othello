@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   public submitted: boolean;
   accountGroup: FormGroup;
+  //promise: Promise<any>;
 
   ngOnInit() {
     this.accountGroup = new FormGroup({

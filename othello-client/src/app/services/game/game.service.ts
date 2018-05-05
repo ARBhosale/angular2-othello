@@ -3,6 +3,7 @@ import { Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Game } from "./game";
 import { Playing } from "./playing";
+import {AppComponent} from "../../app.component";
 
 @Injectable()
 export class GameService {
@@ -22,7 +23,33 @@ export class GameService {
         return newGame;
     }
 
-    public createNewGame(): void { }
+    public createNewGame(value) { 
+
+        let bodyString = value;
+        let headers= new Headers({'Content-Type': 'application/json'});
+        let option= new RequestOptions({headers: headers});
+
+      return  this.http.post(AppComponent.BASE_URL+'/game/playing/v1', bodyString, option)
+                .subscribe(res => console.log(res));
+    }
+
+    public showAvailableGames(): Promise<any> {
+
+        return this.http.get(AppComponent.BASE_URL + '/game/playing/v1')
+            .toPromise()
+            .then(this.extractData)
+            .catch(error => {
+                console.log(error);
+                throw error;
+            });
+    }   
+
+    private extractData(res: any) {
+        let body = res.json();
+        return res._body;
+    }
+
+
     public joinGame(): void { }
 
 
