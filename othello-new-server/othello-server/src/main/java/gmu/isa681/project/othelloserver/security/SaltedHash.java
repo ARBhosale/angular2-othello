@@ -21,7 +21,6 @@ public class SaltedHash {
             byte[] hashedPassword = key.generateSecret(spec).getEncoded();
             Base64.Encoder enc=Base64.getEncoder();
             pwd=enc.encodeToString(hashedPassword);
-            System.out.println(pwd);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

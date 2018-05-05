@@ -28,6 +28,7 @@ public class H2Bootstrap implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Creating 3 players");
+		/*
 		PlayerEntity player1 = new PlayerEntity("A", "B", "uc","p1");
 		PlayerEntity player2 = new PlayerEntity("D", "E", "uF","p2");
 		PlayerEntity player3 = new PlayerEntity("G", "H", "uI","p3");
@@ -43,6 +44,7 @@ public class H2Bootstrap implements CommandLineRunner {
 		System.out.println("A game started by: " + game1.getGameCreatorPlayerId());
 
 		gameRepository.save(game1);
+		*/
 	}
 
 }

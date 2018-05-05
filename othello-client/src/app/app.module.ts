@@ -19,6 +19,7 @@ import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { GameComponent } from './game/game.component';
 
+import { PlayerStatsComponent } from './player.Stats/player.Stats.Component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { GameComponent } from './game/game.component';
     DashboardComponent,
     NavComponent,
     FooterComponent,
-    GameComponent
+    GameComponent,
+    PlayerStatsComponent
   ],
   imports: [
     BrowserModule,

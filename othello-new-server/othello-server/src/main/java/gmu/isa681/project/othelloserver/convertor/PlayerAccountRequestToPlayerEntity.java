@@ -24,7 +24,6 @@ public class PlayerAccountRequestToPlayerEntity implements Converter<PlayerAccou
         String pwd= SaltedHash.getSaltHashedPassword(source.getPassword(), salt);
         playerEntity.setPassword(pwd);
         playerEntity.setSalt(Base64.getEncoder().encodeToString(salt));
-        System.out.print("password "+playerEntity.getPassword()+" Salt"+playerEntity.getSalt());
         return playerEntity;
     }
 }
