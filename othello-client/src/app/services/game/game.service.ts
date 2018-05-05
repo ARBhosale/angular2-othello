@@ -7,7 +7,7 @@ import { Playing } from "./playing";
 @Injectable()
 export class GameService {
 
-    static PLAY_MOVE_URL = "http://localhost:8080/game/playing/v1/play";
+    static PLAY_MOVE_URL = "https://localhost:8023/game/playing/v1/play";
     onGoingGames: Array<Game>;
 
     playing: Playing;

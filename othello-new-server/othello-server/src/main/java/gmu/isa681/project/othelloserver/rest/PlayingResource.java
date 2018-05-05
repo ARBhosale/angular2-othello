@@ -101,7 +101,7 @@ public class PlayingResource {
 		return new ResponseEntity<>(playingResponse, HttpStatus.OK);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "https://localhost:4200")
 	@RequestMapping(path = "/play", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<PlayingResponse> playMove(@RequestBody MoveRequest moveRequest) {
 		GameEntity game = checkForValidGame(moveRequest.getGameId());

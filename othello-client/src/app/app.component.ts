@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'app works!';
-  public static BASE_URL: String = 'http://localhost:8080';
+  public static BASE_URL: String = 'https://localhost:8023';
 
   constructor(private accountService: AccountService, private gameService: GameService, private router: Router) {
 
