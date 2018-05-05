@@ -69,17 +69,18 @@ public class AccountResource {
 		Iterable<PlayerEntity> itr = playerRepository.findAll();
 		Iterator<PlayerEntity> players = itr.iterator();
 
-		while (players.hasNext()){
+		while (players.hasNext()) {
 			PlayerEntity player = players.next();
-			if(player.getUserName().equals(playerAccountRequest.getUserName())){
-				errors= errors + "Username already exists, ";
+			if (player.getUserName().equals(playerAccountRequest.getUserName())) {
+				errors = errors + "Username already exists, ";
 			}
 		}
 
 		if (!playerAccountRequest.getUserName().matches("[a-zA-Z0-9]{5,15}")) {
 			errors = errors + "Username must have length between 5-15 char, ";
 		}
-		if (!playerAccountRequest.getPassword().matches("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")) {
+		if (!playerAccountRequest.getPassword()
+				.matches("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")) {
 			errors = errors + "Password format is invalid, ";
 		}
 		if (!playerAccountRequest.getFirstName().matches("[a-zA-Z\\\\._\\\\-]+")) {
@@ -89,10 +90,12 @@ public class AccountResource {
 			errors = errors + "Invalid last name ";
 		}
 		if (errors != "Errors: ") {
-			System.out.println("Failed to create Account due to following reasons: "+errors);
+			System.out.println("Failed to create Account due to following reasons: " + errors);
 			throw new InvalidCredentialsException(errors);
 		}
 		PlayerEntity playerEntity = conversionService.convert(playerAccountRequest, PlayerEntity.class);
+		playerEntity.setWins(0l);
+		playerEntity.setLosses(0l);
 		playerRepository.save(playerEntity);
 		AccountResponse accountResponse = conversionService.convert(playerEntity, AccountResponse.class);
 		System.out.println("Account Created");

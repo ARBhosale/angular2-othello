@@ -1,13 +1,9 @@
 package gmu.isa681.project.othelloserver;
 
-import gmu.isa681.project.othelloserver.entity.UserEntity;
-import gmu.isa681.project.othelloserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import gmu.isa681.project.othelloserver.entity.GameEntity;
-import gmu.isa681.project.othelloserver.entity.PlayerEntity;
 import gmu.isa681.project.othelloserver.repository.GameRepository;
 import gmu.isa681.project.othelloserver.repository.PlayerRepository;
 
@@ -20,14 +16,11 @@ public class H2Bootstrap implements CommandLineRunner {
 	@Autowired
 	PlayerRepository playerRespository;
 
-	@Autowired
-	UserRepository userRepository;
-
 
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("Creating 3 players");
+//		System.out.println("Creating 3 players");
 		/*
 		PlayerEntity player1 = new PlayerEntity("A", "B", "uc","p1");
 		PlayerEntity player2 = new PlayerEntity("D", "E", "uF","p2");
